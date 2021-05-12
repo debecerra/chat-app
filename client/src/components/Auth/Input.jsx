@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  TextField, InputAdornment, IconButton, Box, Grid,
+  TextField, InputAdornment, IconButton,
 } from '@material-ui/core';
 
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -45,11 +44,17 @@ const Input = (props) => {
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  autoFocus: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
-  isPassword: PropTypes.bool.isRequired,
-  handleClickShowPassword: PropTypes.func.isRequired,
+  autoFocus: PropTypes.bool,
+  isPassword: PropTypes.bool,
+  handleClickShowPassword: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
+};
+
+Input.defaultProps = {
+  autoFocus: false,
+  isPassword: false,
+  handleClickShowPassword: () => console.log('handleClickShowPassword is not defined'),
 };
 
 export default Input;
