@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Paper, Container, Button, Typography, Box,
 } from '@material-ui/core';
 import GoogleButton from 'react-google-button';
 
-// import Icon from './Icon';
+import { googleLogin } from '../../actions/auth';
+
 import Input from './Input';
 import useStyles from './styles';
 
@@ -15,10 +18,13 @@ const initialForm = {
   confirmPassword: '',
 };
 
-const Auth = () => {
+const RegisterOrLogin = () => {
   const [form, setForm] = useState(initialForm);
   const [showPassword, setShowPassword] = useState(false);
   const [registerMode, setRegisterMode] = useState(false);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -38,7 +44,7 @@ const Auth = () => {
   };
 
   const handleClickGoogle = () => {
-
+    dispatch(googleLogin(form, history));
   };
 
   const classes = useStyles();
@@ -92,4 +98,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default RegisterOrLogin;
