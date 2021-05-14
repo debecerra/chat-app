@@ -66,7 +66,7 @@ const RegisterOrLogin = () => {
 
           {/* full name */}
           {registerMode ? (
-            <Input name="fullname" label="Full Name" handleChange={handleChange} value={form.fullName} type="text" />
+            <Input name="fullName" label="Full Name" handleChange={handleChange} value={form.fullName} type="text" />
           ) : null}
 
           {/* email */}

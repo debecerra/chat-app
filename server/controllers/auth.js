@@ -15,7 +15,7 @@ export const register = async (req, res) => {
     } else if (!doc) {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       const newUser = new User({
-        fullname: req.body.fullname,
+        fullName: req.body.fullName,
         email: req.body.email,
         password: hashedPassword,
       });
@@ -27,16 +27,17 @@ export const register = async (req, res) => {
 
 export const login = async (req, res, next) => {
   console.log('/auth/login hit');
-  console.log(req.user);
 
+  // eslint-disable-next-line no-unused-vars
   passport.authenticate('local', (err, user, info) => {
+    console.log(user);
     if (err) throw err;
     if (!user) res.send('No user exists');
     else {
       req.login(user, (error) => {
         if (error) console.log(error);
+        console.log('Successfully authed', user);
         res.send('Successfully Authenicated');
-        console.log(req.user);
       });
     }
   })(req, res, next);

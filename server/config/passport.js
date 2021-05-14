@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-// import passport from 'passport';
 import passportLocal from 'passport-local';
 
 import User from '../models/user.js';
@@ -8,14 +7,12 @@ const LocalStrategy = passportLocal.Strategy;
 
 export default (passport) => {
   passport.use(
-    new LocalStrategy((email, password, done) => {
-      console.log('here1');
+    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
       // eslint-disable-next-line consistent-return
       User.findOne({ email }, (err, user) => {
         if (err) {
           throw err;
         } else if (!user) {
-          console.log('here');
           return done(null, false);
         } else {
           bcrypt.compare(password, user.password, (error, result) => {
@@ -30,15 +27,19 @@ export default (passport) => {
     }),
   );
 
-  passport.serializeUser((user, cb) => {
-    cb(null, user.id);
+  passport.serializeUser((user, done) => {
+    console.log('serialize', user);
+    done(null, user);
   });
-  passport.deserializeUser((id, cb) => {
+
+  passport.deserializeUser((id, done) => {
     User.findOne({ _id: id }, (err, user) => {
       const userInfo = {
+        fullName: user.fullName,
         email: user.email,
       };
-      cb(err, userInfo);
+      console.log(user);
+      done(err, userInfo);
     });
   });
 };

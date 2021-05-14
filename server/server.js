@@ -9,7 +9,7 @@ import passport from 'passport';
 // import passportLocal from 'passport-local';
 // import passportGoogle from 'passport-google-oauth20';
 
-import passportConfig from './config/passportConfig.js';
+import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 
