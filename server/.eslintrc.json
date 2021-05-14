@@ -12,6 +12,7 @@
     },
     "rules": {
         "linebreak-style": 0,
+        "no-console": "off",
         "import/extensions": "off"
     }
 }

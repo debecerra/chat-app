@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import GoogleButton from 'react-google-button';
 
-import { googleLogin } from '../../actions/auth';
+import { register, login, googleLogin } from '../../actions/auth';
 
 import Input from './Input';
 import useStyles from './styles';
@@ -37,6 +37,12 @@ const RegisterOrLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (registerMode) {
+      dispatch(register(form));
+    } else {
+      dispatch(login(form));
+    }
   };
 
   const switchMode = () => {
