@@ -7,7 +7,7 @@ import * as api from '../../api/index';
 
 const Home = () => {
   const user = useSelector((state) => state.currentUser.user);
-  const [currentUser, setCurrentUser] = useState(user);
+  const [currentUser, setCurrentUser] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,10 +25,13 @@ const Home = () => {
   return (
     <Box>
       <Typography>
-        {(currentUser === null) ? 'No User is logged in' : currentUser.email}
+        {currentUser === null ? 'Sign in to get started' : `Welcome ${currentUser.fullName}`}
       </Typography>
       <Button onClick={getUser}>
         Get User
+      </Button>
+      <Button href="/login">
+        Login
       </Button>
       <Button onClick={handleClickLogout}>
         Logout

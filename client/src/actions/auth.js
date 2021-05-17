@@ -1,7 +1,6 @@
 import { AUTH, LOGOUT } from '../constants/actionTypes';
 import * as api from '../api';
 
-// eslint-disable-next-line no-unused-vars
 export const register = (formData, router) => async (dispatch) => {
   try {
     const { data } = await api.register(formData);
@@ -12,7 +11,6 @@ export const register = (formData, router) => async (dispatch) => {
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 export const login = (formData, router) => async (dispatch) => {
   try {
     const { data } = await api.login(formData);

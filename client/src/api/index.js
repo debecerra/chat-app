@@ -22,4 +22,9 @@ export const googleLogin = () => API.get('/auth/google');
 /** make backend API request to logout a user */
 export const logout = () => API.get('/auth/logout', { withCredentials: true });
 
+/*
+ * Users
+ */
+
+/** make backend API request to get a user */
 export const getUser = () => API.get('/user', { withCredentials: true });

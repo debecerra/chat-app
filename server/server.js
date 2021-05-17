@@ -6,8 +6,6 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
-// import passportLocal from 'passport-local';
-// import passportGoogle from 'passport-google-oauth20';
 
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
@@ -15,8 +13,6 @@ import userRoutes from './routes/user.js';
 
 // initialize app
 dotenv.config();
-// const passportLocalStrategy = passportLocal.Strategy;
-// const passportGoogleStrategy = passportGoogle.Strategy;
 const app = express();
 
 // middleware
@@ -66,8 +62,8 @@ mongoose.connect(
 //   },
 // ));
 
-app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
 
 // Root route response
 app.get('/', (req, res) => {
