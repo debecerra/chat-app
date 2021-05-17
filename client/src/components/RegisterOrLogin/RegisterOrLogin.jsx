@@ -1,3 +1,7 @@
+/**
+ * This file contains the Register or Login Form component.
+ */
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -19,8 +23,13 @@ const initialForm = {
 };
 
 const RegisterOrLogin = () => {
+  // the fields of the register or login form
   const [form, setForm] = useState(initialForm);
+
+  // boolean flag that indicates if the password field should be shown as plain text
   const [showPassword, setShowPassword] = useState(false);
+
+  // boolean flag that indicates if form is being used to register (true) or login (false)
   const [registerMode, setRegisterMode] = useState(false);
 
   const dispatch = useDispatch();
@@ -28,7 +37,6 @@ const RegisterOrLogin = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log(form);
   };
 
   const handleClickShowPassword = () => {
@@ -39,9 +47,9 @@ const RegisterOrLogin = () => {
     e.preventDefault();
 
     if (registerMode) {
-      dispatch(register(form));
+      dispatch(register(form, history));
     } else {
-      dispatch(login(form));
+      dispatch(login(form, history));
     }
   };
 

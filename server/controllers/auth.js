@@ -32,12 +32,12 @@ export const login = async (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     console.log(user);
     if (err) throw err;
-    if (!user) res.send('No user exists');
+    if (!user) res.status(404).json({ message: 'User does not exist' });
     else {
       req.login(user, (error) => {
         if (error) console.log(error);
-        console.log('Successfully authed', user);
-        res.send('Successfully Authenicated');
+        console.log('Successfully authenticated:\n', user);
+        res.status(200).json({ message: 'Successfully Authenicated', user });
       });
     }
   })(req, res, next);
