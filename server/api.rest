@@ -1,6 +1,16 @@
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "test3@email",
+    "password": "123456"
+}
+
+### 
+
 GET http://localhost:5000/user
 
 ###
 
-POST http://localhost:5000/auth/logout
+GET http://localhost:5000/auth/logout
 

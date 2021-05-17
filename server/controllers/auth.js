@@ -48,5 +48,6 @@ export const googleLogin = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  res.send('logout');
+  req.logout();
+  res.status(200).json({ message: 'Logout successful' });
 };
