@@ -12,7 +12,7 @@ router.post('/register', register);
 router.post('/login', login);
 
 // handle google login route
-router.post('/google', googleLogin);
+router.post('/login/google', googleLogin);
 
 // handle logout route
 router.get('/logout', logout);

@@ -1,4 +1,7 @@
-// eslint-disable-next-line object-curly-newline
+/**
+ * Contains the Home component which acts as the main landing page for the web app.
+ */
+
 import { Typography, Button, Box } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,16 +9,23 @@ import { logout } from '../../actions/auth';
 import * as api from '../../api/index';
 
 const Home = () => {
+  // current user stored in redux store
   const user = useSelector((state) => state.currentUser.user);
-  const [currentUser, setCurrentUser] = useState(null);
-  const dispatch = useDispatch();
 
+  /// current user state
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const dispatch = useDispatch();
   useEffect(() => {
     setCurrentUser(user);
   }, [user, dispatch]);
 
-  const getUser = async () => {
-    api.getUser().then((res) => console.log(res));
+  const handleClickGetUser = async () => {
+    api.getUser()
+      // eslint-disable-next-line no-alert
+      .then((res) => alert(JSON.stringify(res.data?.user)))
+      // eslint-disable-next-line no-alert
+      .catch((err) => alert(JSON.stringify(err.response?.data?.message)));
   };
 
   const handleClickLogout = () => {
@@ -27,7 +37,7 @@ const Home = () => {
       <Typography>
         {currentUser === null ? 'Sign in to get started' : `Welcome ${currentUser.fullName}`}
       </Typography>
-      <Button onClick={getUser}>
+      <Button onClick={handleClickGetUser}>
         Get User
       </Button>
       <Button href="/login">

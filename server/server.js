@@ -31,11 +31,11 @@ app.use(cors({
 }));
 
 app.use(session({
-  secret: 'secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
 }));
-app.use(cookieParser('secret'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -49,18 +49,6 @@ mongoose.connect(
   },
   () => console.log('Mongoose is connected'),
 );
-
-// passport.use(new passportGoogleStrategy.Strategy(
-//   {
-//     clientID: 'id',
-//     clientSecret: 'secret',
-//     callbackURL: 'url',
-//     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-//   },
-//   (accessToken, refreshToken, profile, cb) => {
-//     User.findOrCreate({ googleId: profile.id }, (err, user) => cb(err, user));
-//   },
-// ));
 
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);

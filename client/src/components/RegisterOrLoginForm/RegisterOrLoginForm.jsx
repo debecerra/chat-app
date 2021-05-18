@@ -1,10 +1,12 @@
 /**
- * This file contains the Register or Login Form component.
+ * Contains the RegisterOrLoginForm component which allows users to register a new account
+ * or sign in using an existing account.
  */
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+// import Paper from '@material-ui/core/Paper';
 import {
   Paper, Container, Button, Typography, Box,
 } from '@material-ui/core';
@@ -22,7 +24,7 @@ const initialForm = {
   confirmPassword: '',
 };
 
-const RegisterOrLogin = () => {
+const RegisterOrLoginForm = () => {
   // the fields of the register or login form
   const [form, setForm] = useState(initialForm);
 
@@ -34,18 +36,29 @@ const RegisterOrLogin = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const classes = useStyles();
 
+  /**
+   * Updates the fields of the form when a change occurs.
+   * @param e the event that was detected
+   */
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  /**
+   * Toggles the visibility of the password field.
+   */
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
+  /**
+   * Submits the contents of the form to either login or register depending on the mode.
+   * @param e the event that was detected
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (registerMode) {
       dispatch(register(form, history));
     } else {
@@ -53,19 +66,24 @@ const RegisterOrLogin = () => {
     }
   };
 
+  /**
+   * Toggles the mode of the form between register and login.
+   */
   const switchMode = () => {
     setRegisterMode((prevMode) => !prevMode);
   };
 
+  /**
+   * Dispatches a Google login action.
+   */
   const handleClickGoogle = () => {
     dispatch(googleLogin(form, history));
   };
 
-  const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
 
-      {/* login form */}
+      {/* form */}
       <Paper className={classes.paper} elevation={5}>
         {/* title */}
         <Typography className={classes.title} component="h1" variant="h5">{registerMode ? 'Sign Up' : 'Sign In'}</Typography>
@@ -112,4 +130,4 @@ const RegisterOrLogin = () => {
   );
 };
 
-export default RegisterOrLogin;
+export default RegisterOrLoginForm;
