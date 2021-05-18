@@ -16,9 +16,6 @@ export const register = (formData) => API.post('/auth/register', formData, { wit
 /** Makes the backend API request to login a user */
 export const login = (formData) => API.post('/auth/login', formData, { withCredentials: true });
 
-/** Makes the backend API request to login a user with Google */
-export const googleLogin = () => API.get('/auth/login/google');
-
 /** Makes the backend API request to logout a user */
 export const logout = () => API.get('/auth/logout', { withCredentials: true });
 

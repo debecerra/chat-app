@@ -57,9 +57,14 @@ export const login = async (req, res, next) => {
  * @param req the http request
  * @param res the http response
  */
-export const googleLogin = async (req, res) => {
-  res.send('googleLogin');
+// eslint-disable-next-line no-unused-vars
+export const googleLogin = (req, res, next) => {
+  // TODO: remove or do something with this function
+  // passport.authenticate('google', { scope: ['profile'] })(req, res, next);
 };
+
+// export const googleRedirect = (req, res) => {
+// };
 
 /**
  * Logout the client connection and end the client session.

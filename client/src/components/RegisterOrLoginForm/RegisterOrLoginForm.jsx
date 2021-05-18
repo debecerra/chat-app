@@ -8,10 +8,12 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // import Paper from '@material-ui/core/Paper';
 import {
-  Paper, Container, Button, Typography, Box,
+  // eslint-disable-next-line no-unused-vars
+  Paper, Container, Button, Typography, Box, Link,
 } from '@material-ui/core';
 import GoogleButton from 'react-google-button';
 
+// eslint-disable-next-line no-unused-vars
 import { register, login, googleLogin } from '../../actions/auth';
 
 import Input from './Input';
@@ -77,7 +79,8 @@ const RegisterOrLoginForm = () => {
    * Dispatches a Google login action.
    */
   const handleClickGoogle = () => {
-    dispatch(googleLogin(form, history));
+    // TODO: delete this?
+    // dispatch(googleLogin(form, history));
   };
 
   return (
@@ -119,11 +122,11 @@ const RegisterOrLoginForm = () => {
         </Button>
 
         {/* google sign in button */}
-        <Box className={classes.googleButtonParent}>
+        <Link href="http://localhost:5000/auth/login/google" className={classes.googleButtonParent}>
           <GoogleButton className={classes.googleButton} onClick={handleClickGoogle}>
             Sign in with Google
           </GoogleButton>
-        </Box>
+        </Link>
 
       </Paper>
     </Container>
