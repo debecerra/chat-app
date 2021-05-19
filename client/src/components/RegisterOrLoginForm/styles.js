@@ -46,5 +46,8 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     borderTop: 'dashed lightgrey',
     width: '100%',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 }));

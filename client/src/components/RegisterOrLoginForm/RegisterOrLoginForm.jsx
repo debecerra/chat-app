@@ -14,7 +14,7 @@ import {
 import GoogleButton from 'react-google-button';
 
 // eslint-disable-next-line no-unused-vars
-import { register, login, googleLogin } from '../../actions/auth';
+import { register, login } from '../../actions/auth';
 
 import Input from './Input';
 import useStyles from './styles';
@@ -75,14 +75,6 @@ const RegisterOrLoginForm = () => {
     setRegisterMode((prevMode) => !prevMode);
   };
 
-  /**
-   * Dispatches a Google login action.
-   */
-  const handleClickGoogle = () => {
-    // TODO: delete this?
-    // dispatch(googleLogin(form, history));
-  };
-
   return (
     <Container component="main" maxWidth="xs">
 
@@ -122,8 +114,8 @@ const RegisterOrLoginForm = () => {
         </Button>
 
         {/* google sign in button */}
-        <Link href="http://localhost:5000/auth/login/google" className={classes.googleButtonParent}>
-          <GoogleButton className={classes.googleButton} onClick={handleClickGoogle}>
+        <Link href="http://localhost:5000/auth/google" className={classes.googleButtonParent}>
+          <GoogleButton className={classes.googleButton}>
             Sign in with Google
           </GoogleButton>
         </Link>

@@ -42,7 +42,7 @@ export default (passport) => {
       proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(JSON.stringify(profile));
+      console.log(JSON.stringify(profile, null, 2));
       // User.findOrCreate({ googleId: profile.id }, (err, user) => cb(err, user));
       // check user table for anyone with a facebook ID of profile.id
       // eslint-disable-next-line consistent-return

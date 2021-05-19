@@ -36,15 +36,15 @@ export const login = (formData, router) => async (dispatch) => {
  * Returns the action that makes the request to login a user using Google Sign In
  * @param {History} router history instance used to navigate the application
  */
-export const googleLogin = (router) => async (dispatch) => {
-  try {
-    const { data } = await api.googleLogin();
-    dispatch({ type: AUTH, data });
-    router.push('/');
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const googleLogin = (router) => async (dispatch) => {
+//   try {
+//     const { data } = await api.googleLogin();
+//     dispatch({ type: AUTH, data });
+//     router.push('/');
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 /**
  * Returns the action that makes the request to logout a user

@@ -1,29 +1,25 @@
 import express from 'express';
-import passport from 'passport';
+
+import { ensureGoogleAuth } from '../middleware/auth.js';
 import {
-  register, login, logout,
+  register, login, logout, googleLogin, googleLoginSuccess,
 } from '../controllers/auth.js';
 
 const router = express.Router();
 
-// handle register route
+// Route that handles register user request
 router.post('/register', register);
 
-// handle login route
+// Route that handles local login request
 router.post('/login', login);
 
-// handle google login route
-router.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Route that handles google sign in request
+router.get('/google', googleLogin);
 
-router.get('/google/redirect', passport.authenticate('google', { failureRedirect: '/error' }),
-  (req, res) => {
-    // Successful authentication, redirect success.
-    console.log(res, req);
-    // TODO: add sign in query to redirect
-    res.redirect('http://localhost:3000?signIn=true');
-  });
+// Google Sign in redirects to this route on completion
+router.get('/google/redirect', ensureGoogleAuth, googleLoginSuccess);
 
-// handle logout route
+// Route that handles logout request
 router.get('/logout', logout);
 
 export default router;

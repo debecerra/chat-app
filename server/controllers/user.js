@@ -7,7 +7,7 @@ export const getUser = async (req, res) => {
   if (req.user) {
     res.status(200).json({ user: req.user });
   } else {
-    res.status(400).json({ message: 'User is not authenticated' });
+    res.status(404).json({ message: 'User data does not exist in session' });
   }
 };
 

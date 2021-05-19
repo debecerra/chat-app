@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
+import querystring from 'querystring';
 import User from '../models/user.js';
 
 /**
@@ -58,13 +59,12 @@ export const login = async (req, res, next) => {
  * @param res the http response
  */
 // eslint-disable-next-line no-unused-vars
-export const googleLogin = (req, res, next) => {
-  // TODO: remove or do something with this function
-  // passport.authenticate('google', { scope: ['profile'] })(req, res, next);
-};
+export const googleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });
 
-// export const googleRedirect = (req, res) => {
-// };
+export const googleLoginSuccess = (req, res) => {
+  const query = querystring.stringify({ signedIn: true });
+  res.redirect(`http://localhost:3000?${query}`);
+};
 
 /**
  * Logout the client connection and end the client session.
