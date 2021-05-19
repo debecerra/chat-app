@@ -62,6 +62,7 @@ export const login = async (req, res, next) => {
 export const googleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });
 
 export const googleLoginSuccess = (req, res) => {
+  // https://stackoverflow.com/a/19038048
   const query = querystring.stringify({ signedIn: true });
   res.redirect(`http://localhost:3000?${query}`);
 };

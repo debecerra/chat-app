@@ -14,24 +14,23 @@ export default (passport) => {
   // Local strategy
   passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     // eslint-disable-next-line consistent-return
-    User.findOne({ email }, (err, user) => {
-      if (err) {
-        throw err;
-      } else if (!user) {
+    User.findOne({ email }, (findError, user) => {
+      if (findError) {
+        throw findError;
+      } else if (!user || !user.password) {
         return done(null, false);
       } else {
-        bcrypt.compare(password, user.password, (error, result) => {
-          if (error) throw error;
-          if (result === true) {
+        bcrypt.compare(password, user.password, (passwordCompError, isMatch) => {
+          if (passwordCompError) throw passwordCompError;
+          if (isMatch) {
             return done(null, user);
           }
-          return done(null, false);
+          return done(null, false, { message: 'Incorrect password' });
         });
       }
     });
   }));
 
-  // TODO: finish this strategy
   // Google strategy
   passport.use(new GoogleStrategy(
     {
@@ -42,53 +41,45 @@ export default (passport) => {
       proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(JSON.stringify(profile, null, 2));
-      // User.findOrCreate({ googleId: profile.id }, (err, user) => cb(err, user));
-      // check user table for anyone with a facebook ID of profile.id
+      // check user collection for anyone with a google ID of profile.id
       // eslint-disable-next-line consistent-return
-      User.findOne({ 'google.id': profile.id }, (err, user) => {
-        if (err) {
-          console.log('error', err);
-          return done(err);
+      User.findOne({ googleId: profile.id }, (findError, user) => {
+        if (findError) {
+          // handle error
+          console.log('error', findError);
+          return done(findError);
         }
-        // eslint-disable-next-line max-len
-        // No user was found, create a new user with values from Facebook (all the profile. stuff)
         if (!user) {
-          console.log('creating new google user');
+          // no user was found, create a new user with values from Google
           const newUser = new User({
-            // name: profile.displayName,
-            fullName: 'google name',
-            // email: profile.emails[0].value,
-            email: 'google email',
-            // username: profile.username,
-            provider: 'google',
-            // now in the future searching on User.findOne({'facebook.id': profile.id },
-            // will match because of this next line
-            // eslint-disable-next-line no-underscore-dangle
-            google: profile._json,
+            displayName: profile.displayName,
+            email: profile.emails[0].value,
+            googleId: profile.id,
           });
-          newUser.save((error) => {
-            if (error) console.log('error creating user', error);
-            console.log('new user created');
-            return done(err, newUser);
+          newUser.save((createError) => {
+            if (createError) console.log('Error creating user via Google', createError);
+            else console.log('New user created via Google: ', newUser);
+            return done(createError, newUser);
           });
         } else {
-          console.log('found google user', user);
-          // found user. Return
-          return done(err, user);
+          // existing user was found
+          console.log('Google sign in successful: ', user);
+          return done(null, user);
         }
       });
     },
   ));
 
+  // determine data that should be stored in the session cookie
   passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user.id);
   });
 
+  // retrieves data that was stored in the session
   passport.deserializeUser((id, done) => {
     User.findOne({ _id: id }, (err, user) => {
       const userInfo = {
-        fullName: user.fullName,
+        displayName: user.displayName,
         email: user.email,
       };
       done(err, userInfo);

@@ -46,6 +46,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     borderTop: 'dashed lightgrey',
     width: '100%',
+    // https://stackoverflow.com/a/53781985
     '&:hover': {
       textDecoration: 'none',
     },
