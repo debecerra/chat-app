@@ -46,7 +46,7 @@ export default (passport) => {
       User.findOne({ googleId: profile.id }, (findError, user) => {
         if (findError) {
           // handle error
-          console.log('error', findError);
+          console.log('Error when authenticating user with Google:', findError);
           return done(findError);
         }
         if (!user) {
@@ -57,7 +57,7 @@ export default (passport) => {
             googleId: profile.id,
           });
           newUser.save((createError) => {
-            if (createError) console.log('Error creating user via Google', createError);
+            if (createError) console.log('Error creating new user via Google:', createError);
             else console.log('New user created via Google: ', newUser);
             return done(createError, newUser);
           });

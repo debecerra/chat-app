@@ -1,11 +1,10 @@
-import { AUTH, LOGOUT } from '../constants/actionTypes';
+import { AUTHENTICATE, LOGOUT, FETCH_USER_DATA } from '../constants/actionTypes';
 
-const currentUser = (state = { user: null }, action) => {
+const currentUser = (state = { user: null, loggedIn: false }, action) => {
   switch (action.type) {
-    case AUTH:
+    case AUTHENTICATE:
       return {
         ...state,
-        user: action.data.user,
         loggedIn: true,
       };
     case LOGOUT:
@@ -14,7 +13,12 @@ const currentUser = (state = { user: null }, action) => {
         user: null,
         loggedIn: false,
       };
-
+    case FETCH_USER_DATA:
+      return {
+        ...state,
+        user: action.data.user,
+        loggedIn: true,
+      };
     default:
       return state;
   }

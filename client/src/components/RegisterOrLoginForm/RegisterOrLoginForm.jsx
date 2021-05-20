@@ -6,27 +6,35 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-// import Paper from '@material-ui/core/Paper';
-import {
-  // eslint-disable-next-line no-unused-vars
-  Paper, Container, Button, Typography, Box, Link,
-} from '@material-ui/core';
+
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import GoogleButton from 'react-google-button';
 
-// eslint-disable-next-line no-unused-vars
 import { register, login } from '../../actions/auth';
-
 import Input from './Input';
 import useStyles from './styles';
 
+const API_BASE_URL = 'http://localhost:5000';
+
 const initialForm = {
-  fullName: '',
+  displayName: '',
   email: '',
   password: '',
   confirmPassword: '',
 };
 
+/**
+ * Form which allows users to enter necessary data to either register or login.
+ */
 const RegisterOrLoginForm = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const classes = useStyles();
+
   // the fields of the register or login form
   const [form, setForm] = useState(initialForm);
 
@@ -35,10 +43,6 @@ const RegisterOrLoginForm = () => {
 
   // boolean flag that indicates if form is being used to register (true) or login (false)
   const [registerMode, setRegisterMode] = useState(false);
-
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const classes = useStyles();
 
   /**
    * Updates the fields of the form when a change occurs.
@@ -87,7 +91,7 @@ const RegisterOrLoginForm = () => {
 
           {/* full name */}
           {registerMode ? (
-            <Input name="fullName" label="Full Name" handleChange={handleChange} value={form.fullName} type="text" />
+            <Input name="displayName" label="Display Name" handleChange={handleChange} value={form.displayName} type="text" />
           ) : null}
 
           {/* email */}
@@ -114,7 +118,7 @@ const RegisterOrLoginForm = () => {
         </Button>
 
         {/* google sign in button */}
-        <Link href="http://localhost:5000/auth/google" className={classes.googleButtonParent}>
+        <Link href={`${API_BASE_URL}/auth/google`} className={classes.googleButtonParent}>
           <GoogleButton className={classes.googleButton}>
             Sign in with Google
           </GoogleButton>

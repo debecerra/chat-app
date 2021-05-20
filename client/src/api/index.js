@@ -23,5 +23,5 @@ export const logout = () => API.get('/auth/logout', { withCredentials: true });
  * Users
  */
 
-/** Makes the backend API request to get a user */
+/** Makes the backend API request to get user profile data */
 export const getUser = () => API.get('/user', { withCredentials: true });

@@ -3,15 +3,17 @@
  */
 
 import React from 'react';
+
 import PropTypes from 'prop-types';
-
-import {
-  TextField, InputAdornment, IconButton,
-} from '@material-ui/core';
-
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import useStyles from './styles';
 
+/**
+ * A generic input component that composes RegisterOrLoginForm.
+ */
 const Input = (props) => {
   const {
     name, label, autoFocus, type, isPassword, handleClickShowPassword, handleChange,
