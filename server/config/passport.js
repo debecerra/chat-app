@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
 import bcrypt from 'bcryptjs';
 import passportLocal from 'passport-local';
 import passportGoogle from 'passport-google-oauth20';
@@ -13,21 +13,30 @@ const GoogleStrategy = passportGoogle.Strategy;
 export default (passport) => {
   // Local  strategy
   passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    // eslint-disable-next-line consistent-return
     User.findOne({ email }, (findError, user) => {
       if (findError) {
-        throw findError;
-      } else if (!user || !user.password) {
-        return done(null, false);
-      } else {
-        bcrypt.compare(password, user.password, (passwordCompError, isMatch) => {
-          if (passwordCompError) throw passwordCompError;
-          if (isMatch) {
-            return done(null, user);
-          }
-          return done(null, false, { message: 'Incorrect password' });
-        });
+        // handle error
+        console.error('Error authenticating with Local Strategy:', findError);
+        return done(findError);
       }
+      if (!user || !user.password) {
+        // email not found, or email already in use with Google Sign In
+        return done(null, false, { message: 'Email is not registered' });
+      }
+      // check if login credentials are correct
+      bcrypt.compare(password, user.password, (passwordCompError, isMatch) => {
+        if (passwordCompError) {
+          // handle error
+          console.error('Error checking password on Local authentication:', passwordCompError);
+          return done(passwordCompError);
+        }
+        if (isMatch) {
+          // successful authentication
+          return done(null, user);
+        }
+        // password was incorrect
+        return done(null, false, { message: 'Incorrect password' });
+      });
     });
   }));
 
@@ -38,15 +47,13 @@ export default (passport) => {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:5000/auth/google/redirect',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-      proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
       // check user collection for anyone with a google ID of profile.id
-      // eslint-disable-next-line consistent-return
       User.findOne({ googleId: profile.id }, (findError, user) => {
         if (findError) {
           // handle error
-          console.log('Error when authenticating user with Google:', findError);
+          console.error('Error authenticating with Google strategy:', findError);
           return done(findError);
         }
         if (!user) {
@@ -57,7 +64,7 @@ export default (passport) => {
             googleId: profile.id,
           });
           newUser.save((createError) => {
-            if (createError) console.log('Error creating new user via Google:', createError);
+            if (createError) console.error('Error creating new user via Google:', createError);
             else console.log('New user created via Google: ', newUser);
             return done(createError, newUser);
           });
@@ -78,6 +85,7 @@ export default (passport) => {
   // retrieves data that was stored in the session
   passport.deserializeUser((id, done) => {
     User.findOne({ _id: id }, (err, user) => {
+      // only return the display name and email
       const userInfo = {
         displayName: user.displayName,
         email: user.email,
