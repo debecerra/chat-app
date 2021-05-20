@@ -2,10 +2,12 @@
  * Contains the Home component which acts as the main landing page for the web app.
  */
 
-import { Typography, Button, Box } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
+
+import { Typography, Button, Box } from '@material-ui/core';
+
 import { fetchCurrentUser, logout } from '../../actions/auth';
 import * as api from '../../api/index';
 
