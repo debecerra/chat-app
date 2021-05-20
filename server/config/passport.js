@@ -11,7 +11,7 @@ const LocalStrategy = passportLocal.Strategy;
 const GoogleStrategy = passportGoogle.Strategy;
 
 export default (passport) => {
-  // Local strategy
+  // Local  strategy
   passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     // eslint-disable-next-line consistent-return
     User.findOne({ email }, (findError, user) => {
