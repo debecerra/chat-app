@@ -9,9 +9,10 @@ export default makeStyles(() => ({
     padding: '5px',
     maxWidth: '20em',
     border: 'solid 1px black',
+    overflow: 'auto',
   },
   item: {
-    border: 'solid 1px black',
+    border: 'solid 2px #717171',
     margin: '1rem 0',
     borderRadius: '12px',
   },
