@@ -4,10 +4,10 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   root: {
     height: '100vh',
-    padding: '0.5rem',
+    padding: theme.spacing(0),
   },
   paper: {
     display: 'flex',

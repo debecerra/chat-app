@@ -26,6 +26,7 @@ const Home = () => {
 
   // fetch the user data, if needed, when the page is first rendered
   useEffect(() => {
+    console.log(loggedIn);
     const queryParams = new URLSearchParams(location.search);
 
     if (loggedIn && !user) {

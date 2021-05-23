@@ -12,24 +12,46 @@ const chats = [
     id: 1,
     name: 'Cool Bear Hangout!',
     members: [
-      'slickyThinky 101',
-      'Don Theata',
+      {
+        name: 'slicky thiccy 101',
+        isAdmin: true,
+      },
+      {
+        name: 'Pop Tart',
+        isAdmin: false,
+      },
     ],
   },
   {
     id: 2,
-    name: 'Sloppy Joe Thursdays',
+    name: 'Wings Night',
     members: [
-      'Timmy Turner',
-      'Lummy Joe',
+      {
+        name: 'Timmy Turner',
+        isAdmin: true,
+      },
+      {
+        name: 'slicky thiccy 101',
+        isAdmin: false,
+      },
     ],
   },
   {
     id: 3,
     name: 'What if we... 😲',
     members: [
-      'slickyThinky 101',
-      'Don Theata',
+      {
+        name: 'slicky thiccy 101',
+        isAdmin: true,
+      },
+      {
+        name: 'Jeff Jones',
+        isAdmin: false,
+      },
+      {
+        name: 'Tommy Tomes',
+        isAdmin: false,
+      },
     ],
   },
 ];
@@ -42,7 +64,7 @@ const ChatList = () => {
     <Container className={styles.root}>
       <List>
         {chats.map((chat) => (
-          <ChatListItem chat={chat} />
+          <ChatListItem key={chat.id} name={chat.name} members={chat.members} />
         ))}
       </List>
     </Container>

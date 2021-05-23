@@ -8,7 +8,7 @@ export default makeStyles(() => ({
   root: {
     padding: '5px',
     maxWidth: '20em',
-    border: 'solid 1px black',
+    // border: 'solid 1px black',
     overflow: 'auto',
   },
   item: {
