@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   item: {
-    border: 'solid 2px #717171',
+    border: 'solid 1px #717171',
     margin: 0,
     borderRadius: '12px',
   },
