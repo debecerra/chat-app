@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-// import { ListItemText } from '@material-ui/core';
 
 import useStyles from './styles';
 
-const Message = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { text, type, user } = props;
+const Message = ({ text, type, user }) => {
   const classes = useStyles();
 
   return (
     <Container className={classes.root}>
-      <ListItem className={`${classes.contentContainer} 
-        ${type === 'send' && classes.send}
-        ${type === 'recieve' && classes.recieve}`}
+      <Container
+        disableGutters
+        className={`${classes.contentContainer} 
+        ${type === 'send' && classes.send} 
+        ${type === 'receive' && classes.receive}`}
       >
         <div className={classes.content}>
           <Paper className={classes.message} variant="outlined">
@@ -26,7 +24,7 @@ const Message = (props) => {
               {text}
             </Typography>
           </Paper>
-          {type === 'recieve' && (
+          {type === 'receive' && (
             <Typography
               className={classes.user}
               variant="subtitle2"
@@ -36,7 +34,7 @@ const Message = (props) => {
             </Typography>
           )}
         </div>
-      </ListItem>
+      </Container>
     </Container>
   );
 };

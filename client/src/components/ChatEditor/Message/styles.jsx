@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    padding: '5px',
+    padding: theme.spacing(1, 0),
   },
   contentContainer: {
     display: 'flex',
@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
   send: {
     flexDirection: 'row-reverse',
   },
-  recieve: {
+  receive: {
     flexDirection: 'row',
   },
 }));

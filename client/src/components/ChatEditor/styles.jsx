@@ -13,5 +13,11 @@ export default makeStyles((theme) => ({
   messages: {
     height: '100%',
     overflow: 'auto',
+    /* Jim Hall https://stackoverflow.com/users/965352/jim-hall,
+     * "Keep overflow div scrolled to bottom unless user scrolls up",
+     * 05-18-2017, https://stackoverflow.com/a/44051405, CC BY-SA 3.0
+     */
+    display: 'flex',
+    flexDirection: 'column-reverse',
   },
 }));
