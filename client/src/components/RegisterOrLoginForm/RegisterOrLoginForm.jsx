@@ -12,10 +12,11 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
 import GoogleButton from 'react-google-button';
 
 import { register, login } from '../../actions/auth';
-import Input from './Input';
+import FormInput from './FormInput';
 import useStyles from './styles';
 
 const API_BASE_URL = 'http://localhost:5000';
@@ -91,18 +92,18 @@ const RegisterOrLoginForm = () => {
 
           {/* full name */}
           {registerMode ? (
-            <Input name="displayName" label="Display Name" handleChange={handleChange} value={form.displayName} type="text" />
+            <FormInput name="displayName" label="Display Name" handleChange={handleChange} value={form.displayName} type="text" />
           ) : null}
 
           {/* email */}
-          <Input name="email" label="Email" value={form.email} type="email" autoFocus handleChange={handleChange} />
+          <FormInput name="email" label="Email" value={form.email} type="email" autoFocus handleChange={handleChange} />
 
           {/* password */}
-          <Input name="password" label="Password" value={form.password} type={showPassword ? 'text' : 'password'} isPassword handleChange={handleChange} handleClickShowPassword={handleClickShowPassword} />
+          <FormInput name="password" label="Password" value={form.password} type={showPassword ? 'text' : 'password'} isPassword handleChange={handleChange} handleClickShowPassword={handleClickShowPassword} />
 
           {/* confirm password */}
           {registerMode ? (
-            <Input name="confirmPassword" label="Confirm Password" value={form.confirmPassword} type={showPassword ? 'text' : 'password'} handleChange={handleChange} isPassword handleClickShowPassword={handleClickShowPassword} />
+            <FormInput name="confirmPassword" label="Confirm Password" value={form.confirmPassword} type={showPassword ? 'text' : 'password'} handleChange={handleChange} isPassword handleClickShowPassword={handleClickShowPassword} />
           ) : null}
 
           {/* login button */}
@@ -113,9 +114,11 @@ const RegisterOrLoginForm = () => {
         </form>
 
         {/* switch mode button */}
-        <Button className={classes.switchModeButton} onClick={switchMode} size="small">
+        <Button className={classes.switchModeButton} onClick={switchMode} size="large">
           {registerMode ? 'Already have an account? Sign in.' : "Don't have an account? Sign up."}
         </Button>
+
+        <Divider className={classes.divider} />
 
         {/* google sign in button */}
         <Link href={`${API_BASE_URL}/auth/google`} className={classes.googleButtonParent}>

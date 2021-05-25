@@ -1,6 +1,6 @@
 import { AUTHENTICATE, LOGOUT, FETCH_USER_DATA } from '../constants/actionTypes';
 
-const currentUser = (state = { user: null, loggedIn: false }, action) => {
+const auth = (state = { user: null, loggedIn: false }, action) => {
   switch (action.type) {
     case AUTHENTICATE:
       return {
@@ -24,4 +24,4 @@ const currentUser = (state = { user: null, loggedIn: false }, action) => {
   }
 };
 
-export default currentUser;
+export default auth;

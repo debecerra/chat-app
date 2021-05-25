@@ -9,12 +9,13 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+
 import useStyles from './styles';
 
 /**
  * A generic input component that composes RegisterOrLoginForm.
  */
-const Input = (props) => {
+const FormInput = (props) => {
   const {
     name, label, autoFocus, type, isPassword, handleClickShowPassword, handleChange,
   } = props;
@@ -47,7 +48,7 @@ const Input = (props) => {
   );
 };
 
-Input.propTypes = {
+FormInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -57,10 +58,10 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
 
-Input.defaultProps = {
+FormInput.defaultProps = {
   autoFocus: false,
   isPassword: false,
   handleClickShowPassword: () => console.log('handleClickShowPassword is not defined'),
 };
 
-export default Input;
+export default FormInput;

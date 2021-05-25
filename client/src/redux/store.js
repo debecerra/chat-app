@@ -1,3 +1,7 @@
+/**
+ * Configuration file for redux store with persist.
+ */
+
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';

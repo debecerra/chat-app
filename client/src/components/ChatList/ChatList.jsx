@@ -58,10 +58,10 @@ const chats = [
 
 // eslint-disable-next-line arrow-body-style
 const ChatList = () => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   return (
-    <Container className={styles.root}>
+    <Container className={classes.root}>
       <List>
         {chats.map((chat) => (
           <ChatListItem key={chat.id} name={chat.name} members={chat.members} />

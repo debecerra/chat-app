@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,13 +10,10 @@ import Avatar from '@material-ui/core/Avatar';
 
 import useStyles from './styles';
 
-const ChatListItem = (props) => {
-  const { name, members } = props;
+const ChatListItem = ({ name, members }) => {
+  const user = useSelector((state) => state.auth.user);
 
-  const user = useSelector((state) => state.currentUser.user);
-  const loggedIn = useSelector((state) => state.currentUser.loggedIn);
-
-  const styles = useStyles();
+  const classes = useStyles();
 
   const getMembersString = (memberArr) => {
     const otherMembers = memberArr.filter((m) => m.name !== user.displayName);
@@ -34,8 +30,8 @@ const ChatListItem = (props) => {
   };
 
   return (
-    <Container className={styles.root}>
-      <ListItem className={styles.item} button>
+    <Container className={classes.root}>
+      <ListItem className={classes.item} button>
         <ListItemAvatar>
           <Avatar alt="Profile Pic" />
         </ListItemAvatar>

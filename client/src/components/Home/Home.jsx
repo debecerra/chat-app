@@ -6,23 +6,24 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 
-import { Typography, Button, Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 import { fetchCurrentUser, logout } from '../../actions/auth';
 import * as api from '../../api/index';
 
 /**
- * Home page for the web application.
+ * Home page for the app.
  */
 const Home = () => {
-  const user = useSelector((state) => state.currentUser.user);
-  const loggedIn = useSelector((state) => state.currentUser.loggedIn);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
 
-  // state of the current user profile as it is displayed in the front end
-  const [currentUser, setCurrentUser] = useState(null);
+  const user = useSelector((state) => state.auth.user); // store of current user data
+  const loggedIn = useSelector((state) => state.auth.loggedIn); // store of logged in status
+  const [currentUser, setCurrentUser] = useState(null); // state of current user
 
   // fetch the user data, if needed, when the page is first rendered
   useEffect(() => {
@@ -81,6 +82,9 @@ const Home = () => {
       </Button>
       <Button href="/login">
         Login
+      </Button>
+      <Button href="/dashboard">
+        Dashboard
       </Button>
       <Button onClick={handleClickLogout}>
         Logout

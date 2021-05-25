@@ -6,8 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
+    margin: theme.spacing(8, 0),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -19,7 +18,7 @@ export default makeStyles((theme) => ({
     },
   },
   title: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2, 0),
   },
   input: {
     margin: theme.spacing(1, 0),
@@ -30,13 +29,15 @@ export default makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(2, 0, 1),
+    margin: theme.spacing(1, 0),
   },
   switchModeButton: {
     margin: theme.spacing(1, 0),
+  },
+  divider: {
+    width: '100%',
   },
   googleButton: {
     margin: theme.spacing(2, 0),
@@ -44,9 +45,8 @@ export default makeStyles((theme) => ({
   googleButtonParent: {
     display: 'flex',
     justifyContent: 'center',
-    borderTop: 'dashed lightgrey',
+    // borderTop: 'dashed lightgrey',
     width: '100%',
-    // https://stackoverflow.com/a/53781985
     '&:hover': {
       textDecoration: 'none',
     },

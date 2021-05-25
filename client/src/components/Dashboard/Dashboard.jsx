@@ -9,13 +9,12 @@ import ChatEditor from '../ChatEditor/ChatEditor';
 
 import useStyles from './styles';
 
-// eslint-disable-next-line arrow-body-style
 const Dashboard = () => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   return (
-    <Container commponent="main" className={styles.root}>
-      <Paper className={styles.paper}>
+    <Container commponent="main" className={classes.root}>
+      <Paper className={classes.paper} elevation={5}>
         <ChatList />
         <Divider orientation="vertical" flexItem />
         <ChatEditor />
