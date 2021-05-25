@@ -20,8 +20,7 @@ export default makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
   },
   user: {
-    padding: theme.spacing(1.5),
-    width: 'fit-content',
+    padding: theme.spacing(0.5, 1.5, 1.5),
   },
   send: {
     flexDirection: 'row-reverse',

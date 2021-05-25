@@ -22,13 +22,19 @@ const Message = (props) => {
       >
         <div className={classes.content}>
           <Paper className={classes.message} variant="outlined">
-            <Typography>
+            <Typography variant="body1">
               {text}
             </Typography>
           </Paper>
-          <Typography className={classes.user}>
-            username
-          </Typography>
+          {type === 'recieve' && (
+            <Typography
+              className={classes.user}
+              variant="subtitle2"
+              align="left"
+            >
+              {user}
+            </Typography>
+          )}
         </div>
       </ListItem>
     </Container>

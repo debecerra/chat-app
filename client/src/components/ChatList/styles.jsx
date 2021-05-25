@@ -4,9 +4,9 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   root: {
-    padding: '5px',
+    padding: theme.spacing(2, 1),
     maxWidth: '20em',
     // border: 'solid 1px black',
     overflow: 'auto',
