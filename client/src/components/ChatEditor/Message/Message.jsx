@@ -11,7 +11,7 @@ const Message = ({ text, type, user }) => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root}>
+    <Container disableGutters className={classes.root}>
       <Container
         disableGutters
         className={`${classes.contentContainer} 

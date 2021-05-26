@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Container from '@material-ui/core/Container';
+// import Container from '@material-ui/core/Container';
 // import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
+import { Drawer, Toolbar } from '@material-ui/core';
 
 import ChatListItem from './ChatListItem/ChatListItem';
 import useStyles from './styles';
@@ -57,18 +58,27 @@ const chats = [
 ];
 
 // eslint-disable-next-line arrow-body-style
-const ChatList = () => {
+const ChatListDrawer = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root}>
-      <List>
-        {chats.map((chat) => (
-          <ChatListItem key={chat.id} name={chat.name} members={chat.members} />
-        ))}
-      </List>
-    </Container>
+    <Drawer
+      className={classes.drawer}
+      variant="permanent"
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <Toolbar />
+      <div className={classes.drawerContainer}>
+        <List>
+          {chats.map((chat) => (
+            <ChatListItem key={chat.id} name={chat.name} members={chat.members} />
+          ))}
+        </List>
+      </div>
+    </Drawer>
   );
 };
 
-export default ChatList;
+export default ChatListDrawer;
