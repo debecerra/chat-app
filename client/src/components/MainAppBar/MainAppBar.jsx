@@ -1,9 +1,13 @@
+/**
+ * Contains implementation of the MainAppBar menu option.
+ */
+
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-// import Button from '@material-ui/core/Button';
-// import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -12,7 +16,10 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 
 import useStyles from './styles';
 
-const MainAppBar = () => {
+/**
+ * Primary AppBar for the application that allows user to select basic menu options.
+ */
+const MainAppBar = ({ toggleOpenDrawer }) => {
   const classes = useStyles();
 
   const handleProfileMenuOpen = () => {
@@ -31,7 +38,7 @@ const MainAppBar = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleOpenDrawer}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -50,6 +57,10 @@ const MainAppBar = () => {
       </AppBar>
     </div>
   );
+};
+
+MainAppBar.propTypes = {
+  toggleOpenDrawer: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;

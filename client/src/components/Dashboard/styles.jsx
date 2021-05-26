@@ -1,15 +1,15 @@
 /**
- * Styles for Dashboard component.
+ * Styles for the Dashboard component.
  */
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    padding: theme.spacing(0),
+    padding: 0,
   },
   paper: {
     flexGrow: 1,

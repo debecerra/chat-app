@@ -1,3 +1,7 @@
+/**
+ * Contains implementation of the ChatListItem component.
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -10,6 +14,9 @@ import Avatar from '@material-ui/core/Avatar';
 
 import useStyles from './styles';
 
+/**
+ * A single list item in a ChatListDrawer.
+ */
 const ChatListItem = ({ name, members }) => {
   const user = useSelector((state) => state.auth.user);
 
@@ -30,8 +37,8 @@ const ChatListItem = ({ name, members }) => {
   };
 
   return (
-    <Container className={classes.root}>
-      <ListItem className={classes.item} button>
+    <Container className={classes.item}>
+      <ListItem className={classes.content} button>
         <ListItemAvatar>
           <Avatar alt="Profile Pic" />
         </ListItemAvatar>

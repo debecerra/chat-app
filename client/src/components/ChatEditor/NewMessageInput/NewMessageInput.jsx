@@ -1,3 +1,7 @@
+/**
+ * Contains implementation of the NewMessageInput component.
+ */
+
 import React, { useState } from 'react';
 
 import Container from '@material-ui/core/Container';
@@ -8,7 +12,9 @@ import SendIcon from '@material-ui/icons/Send';
 
 import useStyles from './styles';
 
-// eslint-disable-next-line arrow-body-style
+/**
+ * Collects new message text input from the user in a ChatEditor component.
+ */
 const NewMessageInput = () => {
   const classes = useStyles();
 

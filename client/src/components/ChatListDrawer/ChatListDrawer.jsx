@@ -1,9 +1,13 @@
-import React from 'react';
+/**
+ * Contains implementation of the ChatListDrawer component.
+ */
 
-// import Container from '@material-ui/core/Container';
-// import Paper from '@material-ui/core/Paper';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import List from '@material-ui/core/List';
-import { Drawer, Toolbar } from '@material-ui/core';
+import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
 
 import ChatListItem from './ChatListItem/ChatListItem';
 import useStyles from './styles';
@@ -57,14 +61,18 @@ const chats = [
   },
 ];
 
-// eslint-disable-next-line arrow-body-style
-const ChatListDrawer = () => {
+/**
+ * A collapsable drawer that allows users to select from their different chats.
+ */
+const ChatListDrawer = ({ open }) => {
   const classes = useStyles();
 
   return (
     <Drawer
       className={classes.drawer}
-      variant="permanent"
+      variant="persistent"
+      anchor="left"
+      open={open}
       classes={{
         paper: classes.drawerPaper,
       }}
@@ -79,6 +87,10 @@ const ChatListDrawer = () => {
       </div>
     </Drawer>
   );
+};
+
+ChatListDrawer.propTypes = {
+  open: PropTypes.bool.isRequired, // true if the drawer is open
 };
 
 export default ChatListDrawer;

@@ -1,25 +1,38 @@
-import React from 'react';
+/**
+ * Contains implementation of the Dashboard component.
+ */
 
-// import Container from '@material-ui/core/Container';
+import React, { useState } from 'react';
+
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 
 import MainAppBar from '../MainAppBar/MainAppBar';
-import ChatList from '../ChatListDrawer/ChatListDrawer';
+import ChatListDrawer from '../ChatListDrawer/ChatListDrawer';
 import ChatEditor from '../ChatEditor/ChatEditor';
 
 import useStyles from './styles';
 
+/**
+ * Main dashboard that allows users to interact with all functionality of the application.
+ */
 const Dashboard = () => {
   const classes = useStyles();
 
+  const [drawerOpen, setDrawerOpen] = useState(true);
+
+  /**
+   * Toggles the open state of the ChatListDrawer.
+   */
+  const toggleChatListDrawer = () => {
+    setDrawerOpen((prevOpen) => !prevOpen);
+  };
+
   return (
     <div commponent="main" className={classes.root}>
-      <MainAppBar />
+      <MainAppBar toggleOpenDrawer={toggleChatListDrawer} />
       <Paper className={classes.paper} elevation={5}>
-        <ChatList />
-        <Divider orientation="vertical" flexItem />
-        <ChatEditor />
+        <ChatListDrawer open={drawerOpen} />
+        <ChatEditor isChatListDrawerOpen={drawerOpen} />
       </Paper>
     </div>
   );

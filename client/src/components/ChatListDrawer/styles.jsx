@@ -1,18 +1,18 @@
 /**
- * Styles for RegisterOrLoginForm component.
+ * Styles for ChatListDrawer component.
  */
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const DRAWER_WIDTH = 360;
+import { CHAT_LIST_DRAWER_WIDTH } from '../../constants/components';
 
 export default makeStyles(() => ({
   drawer: {
-    width: DRAWER_WIDTH,
+    width: CHAT_LIST_DRAWER_WIDTH,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: DRAWER_WIDTH,
+    width: CHAT_LIST_DRAWER_WIDTH,
   },
   drawerContainer: {
     overflow: 'auto',
