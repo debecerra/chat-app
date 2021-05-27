@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 
@@ -40,7 +39,6 @@ app.use(session({
     mongoUrl: process.env.DB_CONNECTION_URL,
   }),
 }));
-// app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(passport.initialize());
 app.use(passport.session());
