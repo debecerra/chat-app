@@ -13,6 +13,10 @@ export const ensureAuthenticated = (req, res, next) => {
   return res.status(400).json({ message: 'User is not authenticated' });
 };
 
+export const validateChatPermissions = (req, res, next) => {
+  next();
+};
+
 /**
  * Authentication middleware to check if Google Sign In was successful after
  * Google redirects back to server API.

@@ -1,15 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
-import userRoutes from './routes/user.js';
+import userRoutes from './routes/users.js';
+// import chatRoutes from './routes/chats.js';
 
 // initialize app
 dotenv.config();
@@ -34,8 +36,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.DB_CONNECTION_URL,
+  }),
 }));
-app.use(cookieParser(process.env.SESSION_SECRET));
+// app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,8 +55,8 @@ mongoose.connect(
   () => console.log('Mongoose is connected'),
 );
 
-app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 // Root route response
 app.get('/', (req, res) => {
