@@ -7,7 +7,9 @@ import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import passportSocketIo from 'passport.socketio';
 
 import passportConfig from './config/passport.js';
 
@@ -24,9 +26,11 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
     credentials: true,
   },
+});
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.DB_CONNECTION_URL,
 });
 
 // middleware
@@ -48,9 +52,21 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.DB_CONNECTION_URL,
-  }),
+  store: sessionStore,
+}));
+
+io.use(passportSocketIo.authorize({
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore,
+  cookieParser,
+  success: (data, accept) => {
+    console.log('Authorized connection to socket.io');
+    accept();
+  },
+  fail: (data, message, error, accept) => {
+    console.log('Unauthorized connection to socket.io:', message);
+    accept();
+  },
 }));
 
 app.use(passport.initialize());
@@ -72,6 +88,7 @@ app.use('/users', userRoutes);
 
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
+  console.log('Socket request:', socket.request.user);
 
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
