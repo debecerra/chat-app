@@ -7,16 +7,15 @@ import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'express-session';
-import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import passportSocketIo from 'passport.socketio';
 
 import passportConfig from './config/passport.js';
 
 import indexRoute from './routes/index.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
-// import chatRoutes from './routes/chats.js';
+
+import registerChatHandlers from './sockets/chats.js';
 
 // initialize app
 dotenv.config();
@@ -48,26 +47,20 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
-}));
+});
 
-io.use(passportSocketIo.authorize({
-  secret: process.env.SESSION_SECRET,
-  store: sessionStore,
-  cookieParser,
-  success: (data, accept) => {
-    console.log('Authorized connection to socket.io');
-    accept();
-  },
-  fail: (data, message, error, accept) => {
-    console.log('Unauthorized connection to socket.io:', message);
-    accept();
-  },
-}));
+app.use(sessionMiddleware);
+
+const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -89,6 +82,7 @@ app.use('/users', userRoutes);
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
   console.log('Socket request:', socket.request.user);
+  registerChatHandlers(io, socket);
 
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);

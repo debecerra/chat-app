@@ -5,7 +5,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
-import io from 'socket.io-client';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -13,8 +12,7 @@ import Box from '@material-ui/core/Box';
 
 import { fetchCurrentUser, logout } from '../../actions/auth';
 import * as api from '../../api/index';
-
-const ENDPOINT = 'http://localhost:5000';
+import socket from '../../services/socket';
 
 /**
  * Home page for the app.
@@ -29,11 +27,12 @@ const Home = () => {
   const [currentUser, setCurrentUser] = useState(null); // state of current user
 
   useEffect(() => {
-    const socket = io(ENDPOINT, { withCredentials: true });
-    socket.on('notification', (data) => {
-      console.log(data);
-    });
-    return () => socket.disconnect();
+    if (user) {
+      console.log('setting up listener');
+      socket.on(`chat-invite:${user.displayName}`, (data) => {
+        console.log(data);
+      });
+    }
   }, []);
 
   // fetch the user data, if needed, when the page is first rendered

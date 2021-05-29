@@ -3,7 +3,6 @@
  */
 
 import React, { useState } from 'react';
-
 import Paper from '@material-ui/core/Paper';
 
 import MainAppBar from '../MainAppBar/MainAppBar';

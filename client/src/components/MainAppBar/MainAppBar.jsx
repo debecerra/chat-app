@@ -4,6 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,19 +16,36 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import ContactsIcon from '@material-ui/icons/Contacts';
 
 import useStyles from './styles';
+import { createChat } from '../../actions/chats';
+import * as api from '../../api/index';
 
 /**
  * Primary AppBar for the application that allows user to select basic menu options.
  */
 const MainAppBar = ({ toggleOpenDrawer }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const handleProfileMenuOpen = () => {
     console.log('Profile button clicked');
   };
 
   const handleNewChatMenuOpen = () => {
-    console.log('Add button clicked');
+    const chat = {
+      name: 'This is a new chat',
+      creator: 'diego.enrique.becerra@gmail.com',
+      members: [{
+        email: 'diego@email',
+        admin: false,
+      }],
+    };
+
+    dispatch(createChat(chat));
+    api.getUser()
+      // eslint-disable-next-line no-alert
+      .then((res) => alert(JSON.stringify(res.data?.user)))
+      // eslint-disable-next-line no-alert
+      .catch((err) => alert(JSON.stringify(err.response?.data?.message)));
   };
 
   const handleContactsMenuOpen = () => {
