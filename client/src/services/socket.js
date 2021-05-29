@@ -5,4 +5,6 @@ const options = {
   withCredentials: true,
 };
 
-export default io(SOCKET_URL, options);
+const socket = io(SOCKET_URL, options);
+
+export default socket;

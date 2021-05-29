@@ -3,18 +3,21 @@ import socket from '../services/socket';
 import { CREATE_CHAT } from '../constants/actionTypes';
 
 /**
- * Returns an action that makes the request to register a new user.
+ * Returns an action that makes sends a message to the server to create a new chat.
  * @returns the action function
  */
 export const createChat = (chatData) => async (dispatch) => {
-  try {
-    socket.emit('chat:create', chatData, (result) => {
-      console.log(result);
-    });
-    dispatch({ type: CREATE_CHAT });
-  } catch (error) {
-    console.log(error);
-  }
+  socket.emit('chat:create', chatData, (result) => {
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      dispatch({ type: CREATE_CHAT, data: chatData });
+    }
+  });
 };
 
 export const readChat = () => { };
+
+export const updateChat = () => { };
+
+export const deleteChat = () => { };

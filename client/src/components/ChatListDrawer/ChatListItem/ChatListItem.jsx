@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Contains implementation of the ChatListItem component.
  */
@@ -42,7 +43,7 @@ const ChatListItem = ({ name, members }) => {
         <ListItemAvatar>
           <Avatar alt="Profile Pic" />
         </ListItemAvatar>
-        <ListItemText primary={name} secondary={getMembersString(members)} />
+        <ListItemText primary={name} />
       </ListItem>
     </Container>
   );

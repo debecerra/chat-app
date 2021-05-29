@@ -17,7 +17,6 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 
 import useStyles from './styles';
 import { createChat } from '../../actions/chats';
-import * as api from '../../api/index';
 
 /**
  * Primary AppBar for the application that allows user to select basic menu options.
@@ -41,11 +40,6 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
     };
 
     dispatch(createChat(chat));
-    api.getUser()
-      // eslint-disable-next-line no-alert
-      .then((res) => alert(JSON.stringify(res.data?.user)))
-      // eslint-disable-next-line no-alert
-      .catch((err) => alert(JSON.stringify(err.response?.data?.message)));
   };
 
   const handleContactsMenuOpen = () => {
