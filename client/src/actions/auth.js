@@ -1,5 +1,5 @@
 import { AUTHENTICATE, LOGOUT, FETCH_USER_DATA } from '../constants/actionTypes';
-import * as api from '../api';
+import * as api from '../api/rest';
 
 /**
  * Returns an action that makes the request to register a new user.

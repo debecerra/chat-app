@@ -47,6 +47,7 @@ app.use(cors({
   credentials: true,
 }));
 
+// move this to middleware?
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -54,16 +55,18 @@ const sessionMiddleware = session({
   store: sessionStore,
 });
 
+// move all app stuff to config
+// move all io stuff to config
 app.use(sessionMiddleware);
+app.use(passport.initialize());
+app.use(passport.session());
 
+// convert a connect middleware to a Socket.IO middleware
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
-
 io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 
-app.use(passport.initialize());
-app.use(passport.session());
 passportConfig(passport);
 
 mongoose.connect(

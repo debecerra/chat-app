@@ -18,9 +18,18 @@ export async function createChat(payload, callback) {
   callback({ status: 'OK' });
 }
 
-export const readChat = () => {
-  // const socket = this;
-};
+export async function readChat(callback) {
+  const socket = this;
+  const { email } = socket?.request?.user;
+  if (!email) {
+    callback({ status: 'ERROR', error: 'Client is not authenticated' });
+  } else {
+    Chat.find({ 'members.email': email }, (err, chats) => {
+      console.log(JSON.stringify(chats, null, 2));
+      callback({ status: 'OK', chats });
+    });
+  }
+}
 
 export const updateChat = () => {
   // const socket = this;

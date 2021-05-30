@@ -10,11 +10,11 @@ const chats = (state = [], action) => {
     case CREATE_CHAT:
       return [...state, action.data];
     case GET_CHATS:
-      return [...state];
+      return [...action.data];
     case UPDATE_CHAT:
-      return [...state];
+      return state;
     case LEAVE_CHAT:
-      return [...state];
+      return state;
     default:
       return state;
   }

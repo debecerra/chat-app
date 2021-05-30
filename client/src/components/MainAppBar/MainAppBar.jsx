@@ -33,10 +33,16 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
     const chat = {
       name: 'This is a new chat',
       creator: 'diego.enrique.becerra@gmail.com',
-      members: [{
-        email: 'diego@email',
-        admin: false,
-      }],
+      members: [
+        {
+          email: 'diego.enrique.becerra@gmail.com',
+          admin: true,
+        },
+        {
+          email: 'diego@email',
+          admin: false,
+        },
+      ],
     };
 
     dispatch(createChat(chat));

@@ -11,8 +11,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
 import { fetchCurrentUser, logout } from '../../actions/auth';
-import * as api from '../../api/index';
-import socket from '../../services/socket';
+import * as api from '../../api/rest';
 
 /**
  * Home page for the app.
@@ -25,15 +24,6 @@ const Home = () => {
   const user = useSelector((state) => state.auth.user); // store of current user data
   const loggedIn = useSelector((state) => state.auth.loggedIn); // store of logged in status
   const [currentUser, setCurrentUser] = useState(null); // state of current user
-
-  useEffect(() => {
-    if (user) {
-      console.log('setting up listener');
-      socket.on(`chat-invite:${user.displayName}`, (data) => {
-        console.log(data);
-      });
-    }
-  }, []);
 
   // fetch the user data, if needed, when the page is first rendered
   useEffect(() => {
