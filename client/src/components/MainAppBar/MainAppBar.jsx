@@ -21,7 +21,7 @@ import { createChat } from '../../actions/chats';
 /**
  * Primary AppBar for the application that allows user to select basic menu options.
  */
-const MainAppBar = ({ toggleOpenDrawer }) => {
+const MainAppBar = ({ toggleOpenDrawer, handleNewChatClick }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -29,6 +29,7 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
     console.log('Profile button clicked');
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleNewChatMenuOpen = () => {
     const chat = {
       name: 'This is a new chat',
@@ -62,7 +63,7 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
           <Typography variant="h6" className={classes.title}>
             Chat App
           </Typography>
-          <IconButton onClick={handleNewChatMenuOpen} aria-label="create a new chat" color="inherit">
+          <IconButton onClick={handleNewChatClick} aria-label="create a new chat" color="inherit">
             <AddCircleIcon />
           </IconButton>
           <IconButton disabled onClick={handleContactsMenuOpen} aria-label="contacts of current user" color="inherit">
@@ -79,6 +80,7 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
 
 MainAppBar.propTypes = {
   toggleOpenDrawer: PropTypes.func.isRequired,
+  handleNewChatClick: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;
