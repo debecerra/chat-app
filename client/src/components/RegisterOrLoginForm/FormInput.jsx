@@ -36,9 +36,7 @@ const FormInput = (props) => {
       InputProps={isPassword ? {
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton
-              onClick={handleClickShowPassword}
-            >
+            <IconButton onClick={handleClickShowPassword}>
               {type === 'text' ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>

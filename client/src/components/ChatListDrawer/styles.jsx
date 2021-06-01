@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { CHAT_LIST_DRAWER_WIDTH } from '../../constants/components';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   drawer: {
     width: CHAT_LIST_DRAWER_WIDTH,
     flexShrink: 0,
@@ -16,5 +16,8 @@ export default makeStyles(() => ({
   },
   drawerContainer: {
     overflow: 'auto',
+  },
+  newChatButtonContainer: {
+    padding: theme.spacing(0, 1, 1),
   },
 }));

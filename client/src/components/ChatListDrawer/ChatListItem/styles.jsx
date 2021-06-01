@@ -10,6 +10,6 @@ export default makeStyles((theme) => ({
   },
   content: {
     border: 'solid 1px rgba(0, 0, 0, 0.87)',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1.5),
   },
 }));
