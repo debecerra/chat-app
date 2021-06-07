@@ -8,4 +8,17 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(2),
   },
+  form: {
+    textAlign: 'left',
+    width: '100%',
+  },
+  title: {
+    margin: theme.spacing(1, 0),
+  },
+  input: {
+    margin: theme.spacing(1, 0),
+  },
+  button: {
+    margin: theme.spacing(1, 1, 1, 0),
+  },
 }));
