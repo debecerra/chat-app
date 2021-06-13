@@ -15,9 +15,6 @@ export default makeStyles((theme) => ({
   title: {
     margin: theme.spacing(1, 0),
   },
-  input: {
-    margin: theme.spacing(1, 0),
-  },
   button: {
     margin: theme.spacing(1, 1, 1, 0),
   },

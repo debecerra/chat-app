@@ -6,18 +6,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-import useStyles from './styles';
+import useStyles from '../styles';
 
 /**
- * A input component used for submitting new items.
+ * A generic input component that composes NewChatForm.
  */
 const Input = (props) => {
   const {
-    name, label, value, type, handleChange, onAddItem,
+    name, label, value, type, handleChange,
   } = props;
 
   const classes = useStyles();
@@ -38,13 +35,6 @@ const Input = (props) => {
             autocomplete: 'off',
           },
         },
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton onClick={onAddItem}>
-              <AddCircleIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
       }}
     />
   );
@@ -56,7 +46,6 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  onAddItem: PropTypes.func.isRequired,
 };
 
 export default Input;

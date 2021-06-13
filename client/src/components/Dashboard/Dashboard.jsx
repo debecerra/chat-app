@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   // actions to be executed when the Dashboard is first rendered
   useEffect(() => {
-    // get all chat that the user is in
+    // get all chat for the current user
     dispatch(getUserChats());
     chatInviteListener.on(user); // still need to check this works as expected
 
@@ -47,25 +47,35 @@ const Dashboard = () => {
     setDrawerOpen((prevOpen) => !prevOpen);
   };
 
-  const handleNewChatClick = () => {
+  /**
+   * Opens the Create New Chat form.
+   */
+  const openNewChatForm = () => {
     setNewChatFormOpen(true);
+  };
+
+  /**
+   * Closes the Create New Chat form
+   */
+  const closeNewChatForm = () => {
+    setNewChatFormOpen(false);
   };
 
   return (
     <div commponent="main" className={classes.root}>
-      <MainAppBar toggleOpenDrawer={toggleChatListDrawer} handleNewChatClick={handleNewChatClick} />
+      <MainAppBar toggleOpenDrawer={toggleChatListDrawer} handleNewChatClick={openNewChatForm} />
       <Paper className={classes.paper} elevation={5}>
-        <ChatListDrawer open={drawerOpen} openNewChatForm={handleNewChatClick} />
+        <ChatListDrawer open={drawerOpen} openNewChatForm={openNewChatForm} />
         <ChatEditor isChatListDrawerOpen={drawerOpen} />
       </Paper>
 
       <Modal
         open={newChatFormOpen}
-        onClose={() => setNewChatFormOpen(false)}
+        // onClose={closeNewChatForm}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <NewChatForm />
+        <NewChatForm onDiscard={closeNewChatForm} />
       </Modal>
     </div>
   );
