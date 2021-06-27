@@ -18,30 +18,34 @@ import MemberList from './MemberList/MemberList';
 
 import { createChat } from '../../actions/chats';
 
-const INITIAL_FORM = {
-  chatName: '',
-  newMember: '',
-};
-
 const NewChatForm = ({ onDiscard }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState(INITIAL_FORM);
+  const [chatNameField, setChatNameField] = useState('');
+  const [newMemberField, setNewMemberField] = useState('');
   const [members, setMembers] = useState([]);
 
+  /**
+   * Handles event when a change is detected.
+   * @param {object} e the event that was triggered
+   */
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === 'chatNameField') {
+      setChatNameField(e.target.value);
+    } else if (e.target.name === 'newMemberField') {
+      setNewMemberField(e.target.value);
+    }
   };
 
   /**
    * Adds an email to the members array.
    */
   const handleAddMember = () => {
-    if (!members.includes(form.newMember)) {
-      setMembers([...members, form.newMember]);
+    if (!members.includes(newMemberField)) {
+      setMembers([...members, newMemberField]);
     }
-    setForm({ ...form, newMember: '' });
+    setNewMemberField('');
   };
 
   /**
@@ -54,15 +58,14 @@ const NewChatForm = ({ onDiscard }) => {
     ));
   };
 
+  /**
+   * Submit form data to create a new chat.
+   * @param {object} e the event object that was triggered
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const chatData = {
-      name: form.chatName,
-      members,
-    };
-
-    dispatch(createChat(chatData));
+    dispatch(createChat(chatNameField, members));
+    onDiscard();
   };
 
   return (
@@ -76,10 +79,10 @@ const NewChatForm = ({ onDiscard }) => {
           <Typography className={classes.title} variant="h5">Create a New Chat Room</Typography>
 
           {/* chat name */}
-          <Input name="chatName" label="Enter name for new chat room" value={form.chatName} type="text" autoFocus handleChange={handleChange} />
+          <Input name="chatNameField" label="Enter name for new chat room" value={chatNameField} type="text" autoFocus handleChange={handleChange} />
 
           {/* add participants */}
-          <NewItemInput name="newMember" label="Add member by email" value={form.newMember} type="email" handleChange={handleChange} onAddItem={handleAddMember} />
+          <NewItemInput name="newMemberField" label="Add member by email" value={newMemberField} type="email" handleChange={handleChange} onAddItem={handleAddMember} />
 
           {/* added participants */}
           <Typography className={classes.title} variant="body2">{`Added Members: (${members.length})`}</Typography>

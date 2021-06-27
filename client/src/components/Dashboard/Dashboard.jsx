@@ -71,7 +71,7 @@ const Dashboard = () => {
 
       <Modal
         open={newChatFormOpen}
-        // onClose={closeNewChatForm}
+        onClose={closeNewChatForm}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

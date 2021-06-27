@@ -26,7 +26,7 @@ const MemberList = ({ userEmails, onEmailDelete }) => {
 
 MemberList.propTypes = {
   userEmails: PropTypes.arrayOf(PropTypes.string),
-  onEmailDelete: PropTypes.func,
+  onEmailDelete: PropTypes.func, // function to be called when an email is deleted
 };
 
 MemberList.defaultProps = {
