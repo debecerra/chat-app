@@ -5,7 +5,10 @@ import Chip from '@material-ui/core/Chip';
 
 import useStyles from './styles';
 
-const ParticpantList = ({ userEmails, onEmailDelete }) => {
+/**
+ * Component that contains a collection of Chips with the emails of chat room members.
+ */
+const MemberList = ({ userEmails, onEmailDelete }) => {
   const classes = useStyles();
 
   return (
@@ -21,14 +24,14 @@ const ParticpantList = ({ userEmails, onEmailDelete }) => {
   );
 };
 
-ParticpantList.propTypes = {
+MemberList.propTypes = {
   userEmails: PropTypes.arrayOf(PropTypes.string),
   onEmailDelete: PropTypes.func,
 };
 
-ParticpantList.defaultProps = {
+MemberList.defaultProps = {
   userEmails: [],
   onEmailDelete: null,
 };
 
-export default ParticpantList;
+export default MemberList;

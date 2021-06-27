@@ -2,10 +2,10 @@ import socket from '../../services/socket';
 
 /**
  * Emit an event to create a new chat
- * @param form the form data to create the chat
+ * @param data the data to create the chat
  * @param callback the function to be called once the request has completed
  */
-export const emitCreateChat = (form, callback) => socket.emit('chat:create', form, callback);
+export const emitCreateChat = (data, callback) => socket.emit('chat:create', data, callback);
 
 /**
  * Emit an event to read all chats for a given user

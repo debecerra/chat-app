@@ -1,19 +1,44 @@
+import Joi from 'joi';
+
 import Chat from '../models/chat.js';
+
+const chatSchema = Joi.object({
+  name: Joi.string().required(),
+  members: Joi.array().items(Joi.string().email()),
+});
 
 export async function createChat(payload, callback) {
   const socket = this;
-  console.log('User:', socket.request.user);
-  const newChat = new Chat({
-    name: payload.name,
-    creator: payload.creator,
-    members: payload.members,
-  });
+  const { user } = socket.request;
+
+  if (typeof callback !== 'function') {
+    // not an acknowledgement
+    socket.disconnect();
+  }
+
+  const { error, value } = chatSchema.validate(payload);
+
+  if (error) {
+    callback({
+      status: 'ERROR',
+      error,
+    });
+  }
+
+  const { name } = value;
+  const memberEmails = value.members;
+
+  const creator = user.email;
+  const members = memberEmails.map((email) => ({ email, admin: false }));
+  members.unshift({ email: creator, admin: true });
+
+  const newChat = new Chat({ name, creator, members });
   await newChat.save();
 
-  payload.members.forEach((member) => {
-    console.log('Sending invite to', member.email);
-    socket.broadcast.emit(`chat-invite:${member.email}`, 'You have been invited to join a chat');
-  });
+  // payload.members.forEach((member) => {
+  //   console.log('Sending invite to', member.email);
+  //   socket.broadcast.emit(`chat-invite:${member.email}`, 'You have been invited to join a chat');
+  // });
 
   callback({ status: 'OK' });
 }
