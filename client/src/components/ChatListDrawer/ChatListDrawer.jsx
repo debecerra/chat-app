@@ -17,7 +17,7 @@ import useStyles from './styles';
 /**
  * A collapsable drawer that allows users to select from their different chats.
  */
-const ChatListDrawer = ({ open }) => {
+const ChatListDrawer = ({ open, openNewChatForm }) => {
   const classes = useStyles();
 
   const chats = useSelector((state) => state.chats);
@@ -34,12 +34,12 @@ const ChatListDrawer = ({ open }) => {
     >
       <Toolbar />
       <div className={classes.drawerContainer}>
+        <div className={classes.newChatButtonContainer}>
+          <Button className={classes.newChatButton} fullWidth color="secondary" variant="outlined" onClick={openNewChatForm}>
+            Create a new chat
+          </Button>
+        </div>
         <List>
-          <div className={classes.newChatButtonContainer}>
-            <Button className={classes.newChatButton} fullWidth color="secondary" variant="outlined">
-              Create a new chat
-            </Button>
-          </div>
           {chats.map((chat) => (
             <ChatListItem key={chat.id} name={chat.name} members={chat.members} />
           ))}
@@ -51,6 +51,11 @@ const ChatListDrawer = ({ open }) => {
 
 ChatListDrawer.propTypes = {
   open: PropTypes.bool.isRequired, // true if the drawer is open
+  openNewChatForm: PropTypes.func, // function that opens a new chat form
+};
+
+ChatListDrawer.defaultProps = {
+  openNewChatForm: null,
 };
 
 export default ChatListDrawer;

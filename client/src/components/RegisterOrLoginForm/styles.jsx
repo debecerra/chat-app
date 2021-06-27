@@ -45,7 +45,6 @@ export default makeStyles((theme) => ({
   googleButtonParent: {
     display: 'flex',
     justifyContent: 'center',
-    // borderTop: 'dashed lightgrey',
     width: '100%',
     '&:hover': {
       textDecoration: 'none',

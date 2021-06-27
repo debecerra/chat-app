@@ -29,7 +29,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: CORS_OPTIONS });
 
-// initialize middleware for express app
+// initialize middleware for express
 app.use(cors(CORS_OPTIONS));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));

@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -21,7 +22,7 @@ import { createChat } from '../../actions/chats';
 /**
  * Primary AppBar for the application that allows user to select basic menu options.
  */
-const MainAppBar = ({ toggleOpenDrawer }) => {
+const MainAppBar = ({ toggleOpenDrawer, handleNewChatClick }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -29,6 +30,7 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
     console.log('Profile button clicked');
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleNewChatMenuOpen = () => {
     const chat = {
       name: 'This is a new chat',
@@ -62,9 +64,11 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
           <Typography variant="h6" className={classes.title}>
             Chat App
           </Typography>
-          <IconButton onClick={handleNewChatMenuOpen} aria-label="create a new chat" color="inherit">
-            <AddCircleIcon />
-          </IconButton>
+          <Tooltip title="Create a new chat">
+            <IconButton onClick={handleNewChatClick} aria-label="Open create chat form" color="inherit">
+              <AddCircleIcon />
+            </IconButton>
+          </Tooltip>
           <IconButton disabled onClick={handleContactsMenuOpen} aria-label="contacts of current user" color="inherit">
             <ContactsIcon />
           </IconButton>
@@ -79,6 +83,7 @@ const MainAppBar = ({ toggleOpenDrawer }) => {
 
 MainAppBar.propTypes = {
   toggleOpenDrawer: PropTypes.func.isRequired,
+  handleNewChatClick: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;

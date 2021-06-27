@@ -18,6 +18,6 @@ export default makeStyles((theme) => ({
     overflow: 'auto',
   },
   newChatButtonContainer: {
-    padding: theme.spacing(0, 1, 1),
+    padding: theme.spacing(2, 1, 0),
   },
 }));

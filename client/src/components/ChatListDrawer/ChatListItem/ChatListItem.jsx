@@ -23,19 +23,19 @@ const ChatListItem = ({ name, members }) => {
 
   const classes = useStyles();
 
-  const getMembersString = (memberArr) => {
-    const otherMembers = memberArr.filter((m) => m.name !== user.displayName);
-    switch (otherMembers.length) {
-      case 0:
-        return 'No one else';
-      case 1:
-        return otherMembers[0].name;
-      case 2:
-        return `${otherMembers[0].name} and ${otherMembers[1].name}`;
-      default:
-        return `${otherMembers[0].name}, ${otherMembers[1].name} and others`;
-    }
-  };
+  // const getMembersString = (memberArr) => {
+  //   const otherMembers = memberArr.filter((m) => m.name !== user.displayName);
+  //   switch (otherMembers.length) {
+  //     case 0:
+  //       return 'No one else';
+  //     case 1:
+  //       return otherMembers[0].name;
+  //     case 2:
+  //       return `${otherMembers[0].name} and ${otherMembers[1].name}`;
+  //     default:
+  //       return `${otherMembers[0].name}, ${otherMembers[1].name} and others`;
+  //   }
+  // };
 
   return (
     <Container className={classes.item}>
@@ -52,9 +52,13 @@ const ChatListItem = ({ name, members }) => {
 ChatListItem.propTypes = {
   name: PropTypes.string.isRequired,
   members: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    isAdmin: PropTypes.bool.isRequired,
-  })).isRequired,
+    name: PropTypes.string,
+    isAdmin: PropTypes.bool,
+  })),
+};
+
+ChatListItem.defaultProps = {
+  members: [],
 };
 
 export default ChatListItem;

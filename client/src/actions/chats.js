@@ -9,18 +9,26 @@ import {
 
 /**
  * Returns an action that makes sends a message to the server to create a new chat.
- * @returns the action function
+ * @param {string} name the name of the new chat
+ * @param {Array<string>} memberEmails the emails of the members to add to the chat
+ * @returns {function} the action function
  */
-export const createChat = (chatData) => async (dispatch) => {
-  socket.emitCreateChat(chatData, (result) => {
+export const createChat = (name, memberEmails) => async (dispatch) => {
+  const payload = { name, members: memberEmails };
+  socket.emitCreateChat(payload, (result) => {
     if (result.error) {
       console.log(result.error);
       return;
     }
-    dispatch({ type: CREATE_CHAT, data: chatData });
+    dispatch({ type: CREATE_CHAT, data: payload });
   });
 };
 
+/**
+ * Returns an action that makes a request to the server connection to read all chats for
+ * the current user.
+ * @returns the action function
+ */
 export const getUserChats = () => async (dispatch) => {
   socket.emitGetUserChats((result) => {
     if (result.error) {
