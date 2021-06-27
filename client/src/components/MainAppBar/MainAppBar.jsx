@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -63,9 +64,11 @@ const MainAppBar = ({ toggleOpenDrawer, handleNewChatClick }) => {
           <Typography variant="h6" className={classes.title}>
             Chat App
           </Typography>
-          <IconButton onClick={handleNewChatClick} aria-label="create a new chat" color="inherit">
-            <AddCircleIcon />
-          </IconButton>
+          <Tooltip title="Create a new chat">
+            <IconButton onClick={handleNewChatClick} aria-label="Open create chat form" color="inherit">
+              <AddCircleIcon />
+            </IconButton>
+          </Tooltip>
           <IconButton disabled onClick={handleContactsMenuOpen} aria-label="contacts of current user" color="inherit">
             <ContactsIcon />
           </IconButton>

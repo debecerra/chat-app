@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
   },
   content: {
     width: 'fit-content',
-    maxWidth: '70%',
+    maxWidth: '80%',
   },
   messageBody: {
     padding: theme.spacing(1.5),
