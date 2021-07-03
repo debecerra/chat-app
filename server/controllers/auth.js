@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import querystring from 'querystring';
+import dotenv from 'dotenv';
+
 import User from '../models/user.js';
 
-const FRONTEND_BASE_URL = 'http://localhost:3000';
+dotenv.config();
 
 /**
  * Register a new user and initiate client session using local strategy.
@@ -79,7 +81,7 @@ export const googleLoginSuccess = (req, res) => {
    * https://stackoverflow.com/a/19038048, CC BY-SA 3.0
    */
   const query = querystring.stringify({ googleSuccess: true });
-  res.redirect(`${FRONTEND_BASE_URL}?${query}`);
+  res.redirect(`${process.env.ORIGIN}?${query}`);
 };
 
 /**

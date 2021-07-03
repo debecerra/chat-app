@@ -19,8 +19,6 @@ import { register, login } from '../../actions/auth';
 import FormInput from './FormInput';
 import useStyles from './styles';
 
-const API_BASE_URL = 'http://localhost:5000';
-
 const initialForm = {
   displayName: '',
   email: '',
@@ -121,7 +119,7 @@ const RegisterOrLoginForm = () => {
         <Divider className={classes.divider} />
 
         {/* google sign in button */}
-        <Link href={`${API_BASE_URL}/auth/google`} className={classes.googleButtonParent}>
+        <Link href={`${process.env.REACT_APP_API_URL}/auth/google`} className={classes.googleButtonParent}>
           <GoogleButton className={classes.googleButton}>
             Sign in with Google
           </GoogleButton>

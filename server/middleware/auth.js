@@ -1,4 +1,7 @@
 import passport from 'passport';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * Verify the request is coming from an authenticated client.
@@ -13,14 +16,10 @@ export const ensureAuthenticated = (req, res, next) => {
   return res.status(400).json({ message: 'User is not authenticated' });
 };
 
-export const validateChatPermissions = (req, res, next) => {
-  next();
-};
-
 /**
  * Authentication middleware to check if Google Sign In was successful after
  * Google redirects back to server API.
  */
 export const ensureGoogleAuth = passport.authenticate('google', {
-  failureRedirect: 'http://localhost:3000/login?loginFailed=true',
+  failureRedirect: `${process.env.ORIGIN}/login?loginFailed=true`,
 });

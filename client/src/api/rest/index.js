@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000';
-const API = axios.create({ baseURL: BASE_URL });
+const API_URL = process.env.REACT_APP_API_URL;
+const API = axios.create({ baseURL: API_URL });
 
 // Makes the backend API request GET '/'
 export const get = () => API.get('/');
