@@ -18,7 +18,7 @@ import MemberList from './MemberList/MemberList';
 
 import { createChat } from '../../actions/chats';
 
-const NewChatForm = ({ onDiscard }) => {
+const NewChatForm = React.forwardRef(({ onDiscard }, ref) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -70,7 +70,7 @@ const NewChatForm = ({ onDiscard }) => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" ref={ref}>
 
       {/* form */}
       <Paper className={classes.paper} elevation={5}>
@@ -97,7 +97,7 @@ const NewChatForm = ({ onDiscard }) => {
       </Paper>
     </Container>
   );
-};
+});
 
 NewChatForm.propTypes = {
   onDiscard: PropTypes.func,
