@@ -39,11 +39,12 @@ const NewChatForm = ({ onDiscard }) => {
   };
 
   /**
-   * Adds an email to the members array.
+   * Adds the email in newMemberField state to the members array.
    */
   const handleAddMember = () => {
-    if (!members.includes(newMemberField)) {
-      setMembers([...members, newMemberField]);
+    const newMemberEmail = newMemberField.trim();
+    if (newMemberEmail.length > 0 && !members.includes(newMemberEmail)) {
+      setMembers([...members, newMemberEmail]);
     }
     setNewMemberField('');
   };
