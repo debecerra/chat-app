@@ -20,7 +20,7 @@ import useStyles from './styles';
 const ChatListDrawer = ({ open, openNewChatForm }) => {
   const classes = useStyles();
 
-  const chats = useSelector((state) => state.chats);
+  const chats = useSelector((state) => state.chats.all);
 
   return (
     <Drawer
