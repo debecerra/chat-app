@@ -75,7 +75,9 @@ const Dashboard = () => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <NewChatForm onDiscard={closeNewChatForm} />
+        <>
+          <NewChatForm onDiscard={closeNewChatForm} />
+        </>
       </Modal>
     </div>
   );

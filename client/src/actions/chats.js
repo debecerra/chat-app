@@ -20,7 +20,7 @@ export const createChat = (name, memberEmails) => async (dispatch) => {
       console.log(result.error);
       return;
     }
-    dispatch({ type: CREATE_CHAT, data: payload });
+    dispatch({ type: CREATE_CHAT, data: result.object });
   });
 };
 

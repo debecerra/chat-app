@@ -49,7 +49,7 @@ export async function createChat(payload, callback) {
   //   socket.broadcast.emit(`chat-invite:${member.email}`, 'You have been invited to join a chat');
   // });
 
-  callback({ status: 'OK' });
+  callback({ status: 'OK', object: newChat });
 }
 
 /**

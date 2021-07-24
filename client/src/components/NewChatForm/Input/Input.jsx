@@ -30,7 +30,7 @@ const Input = (props) => {
       onChange={handleChange}
       InputProps={{
         inputProps: {
-          autocomplete: 'new-password',
+          autoComplete: 'new-password',
           form: {
             autocomplete: 'off',
           },
