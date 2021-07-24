@@ -5,6 +5,7 @@ import {
   GET_CHATS,
   UPDATE_CHAT,
   LEAVE_CHAT,
+  SELECT_ACTIVE_CHAT,
 } from '../constants/actionTypes';
 
 /**
@@ -57,4 +58,8 @@ export const leaveChat = (chatId) => async (dispatch) => {
     }
     dispatch({ type: LEAVE_CHAT, data: chatId });
   });
+};
+
+export const setActiveChat = (chat) => async (dispatch) => {
+  dispatch({ type: SELECT_ACTIVE_CHAT, data: chat });
 };

@@ -3,6 +3,7 @@ import {
   GET_CHATS,
   UPDATE_CHAT,
   LEAVE_CHAT,
+  SELECT_ACTIVE_CHAT,
 } from '../constants/actionTypes';
 
 const chats = (state = { all: [], active: null }, action) => {
@@ -21,6 +22,11 @@ const chats = (state = { all: [], active: null }, action) => {
       return state;
     case LEAVE_CHAT:
       return state;
+    case SELECT_ACTIVE_CHAT:
+      return {
+        ...state,
+        active: action.data,
+      };
     default:
       return state;
   }

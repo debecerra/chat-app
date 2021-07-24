@@ -1,33 +1,34 @@
-/* eslint-disable no-unused-vars */
 /**
  * Contains implementation of the ChatListItem component.
  */
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import useStyles from './styles';
+import { setActiveChat } from '../../../actions/chats';
 
 /**
  * A single list item in a ChatListDrawer.
  */
-const ChatListItem = ({ name, members }) => {
+// eslint-disable-next-line no-unused-vars
+const ChatListItem = ({ id, name }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  // current user
-  const user = useSelector((state) => state.auth.user);
+  const chats = useSelector((state) => state.chats.all);
 
   // anchor for chat menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,9 +48,17 @@ const ChatListItem = ({ name, members }) => {
     setAnchorEl(null);
   };
 
+  /**
+   * Sets the active chat to the chat represented by the ChatListItem.
+   */
+  const setCurrentToActiveChat = () => {
+    const currentChat = chats.find((chat) => chat.id === id);
+    dispatch(setActiveChat(currentChat));
+  };
+
   return (
     <Container className={classes.item}>
-      <ListItem className={classes.content} button>
+      <ListItem className={classes.content} button onClick={setCurrentToActiveChat}>
         <ListItemText primary={name} />
         <ListItemSecondaryAction>
           <IconButton
@@ -78,15 +87,8 @@ const ChatListItem = ({ name, members }) => {
 };
 
 ChatListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  members: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    isAdmin: PropTypes.bool,
-  })),
-};
-
-ChatListItem.defaultProps = {
-  members: [],
+  id: PropTypes.string.isRequired, // the id of the chat being represented
+  name: PropTypes.string.isRequired, // the name of the chat being represented
 };
 
 export default ChatListItem;
