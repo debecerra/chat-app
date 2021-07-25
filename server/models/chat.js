@@ -9,6 +9,10 @@ const chatSchema = mongoose.Schema({
     email: { type: String, required: true },
     admin: { type: Boolean, default: false },
   }],
+  messages: [{
+    body: { type: String, requried: true },
+    author: { type: String },
+  }],
 });
 
 // Duplicate the ID field.
