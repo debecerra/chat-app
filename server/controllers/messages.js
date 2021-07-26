@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Joi from 'joi';
 
 import Chat from '../models/chat.js';
@@ -18,7 +17,6 @@ const messageSchema = Joi.object({
  * @param callback acknowledgment function to send a response to the client */
 export async function createMessage(payload, callback) {
   const socket = this;
-  const { user } = socket.request;
 
   if (typeof callback !== 'function') {
     // not an acknowledgement
@@ -28,7 +26,7 @@ export async function createMessage(payload, callback) {
   const { error, value } = messageSchema.validate(payload);
 
   if (error) {
-    // error
+    // handle error
     callback({
       status: 'ERROR',
       error,
@@ -40,16 +38,16 @@ export async function createMessage(payload, callback) {
     const update = { $push: { messages: newMessage } };
     Chat.findByIdAndUpdate(chatId, update, (err, doc) => {
       if (err) {
-        // error
+        // handle error
         callback({
           status: 'ERROR',
           error: err,
         });
       } else {
-        // send new message document to client
+        // send created document to client
         callback({
           status: 'OK',
-          object: newMessage,
+          doc,
         });
       }
     });

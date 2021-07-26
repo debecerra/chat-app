@@ -27,32 +27,42 @@ export async function createChat(payload, callback) {
   const { error, value } = chatSchema.validate(payload);
 
   if (error) {
+    // handle error
     callback({
       status: 'ERROR',
       error,
     });
+  } else {
+    // create the new Chat document
+    const members = value.members.map((email) => ({ email, admin: false }));
+    members.unshift({ email: user.email, admin: true });
+    const newChat = new Chat({
+      name: value.name,
+      creator: user.email,
+      members,
+    });
+
+    await newChat.save((err, doc) => {
+      if (err) {
+        // handle error
+        callback({
+          status: 'ERROR',
+          error: err,
+        });
+      } else {
+        // send created document to client
+        callback({
+          status: 'OK',
+          doc,
+        });
+      }
+    });
+
+    // payload.members.forEach((member) => {
+    //   console.log('Sending invite to', member.email);
+    //   socket.broadcast.emit(`chat-invite:${member.email}`, 'Hello');
+    // });
   }
-
-  // create the new Chat document
-  const members = value.members.map((email) => ({ email, admin: false }));
-  members.unshift({ email: user.email, admin: true });
-
-  const newChat = new Chat({
-    name: value.name,
-    creator: user.email,
-    members,
-  });
-  await newChat.save();
-
-  // payload.members.forEach((member) => {
-  //   console.log('Sending invite to', member.email);
-  //   socket.broadcast.emit(`chat-invite:${member.email}`, 'You have been invited to join a chat');
-  // });
-
-  callback({
-    status: 'OK',
-    object: newChat,
-  });
 }
 
 /**
