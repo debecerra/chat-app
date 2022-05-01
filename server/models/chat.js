@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import mongoose from 'mongoose';
+import messageModel from './message.js';
 
 const chatSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -9,10 +10,7 @@ const chatSchema = mongoose.Schema({
     email: { type: String, required: true },
     admin: { type: Boolean, default: false },
   }],
-  messages: [{
-    body: { type: String, requried: true },
-    author: { type: String },
-  }],
+  messages: [messageModel.schema],
 });
 
 // Duplicate the ID field.

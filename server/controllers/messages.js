@@ -13,8 +13,9 @@ const messageSchema = Joi.object({
 
 /**
  * Creates a message given a client payload
- * @param payload data received from the client
- * @param callback acknowledgment function to send a response to the client */
+ * @param payload The data received from the client
+ * @param callback The acknowledgment function to send a response to the client
+ */
 export async function createMessage(payload, callback) {
   const socket = this;
 
@@ -36,7 +37,7 @@ export async function createMessage(payload, callback) {
     const newMessage = { body, author };
 
     const update = { $push: { messages: newMessage } };
-    Chat.findByIdAndUpdate(chatId, update, (err, doc) => {
+    Chat.findByIdAndUpdate(chatId, update, { new: true }, (err, chat) => {
       if (err) {
         // handle error
         callback({
@@ -44,18 +45,48 @@ export async function createMessage(payload, callback) {
           error: err,
         });
       } else {
-        // send created document to client
+        // send created message document (most recent) to client
         callback({
           status: 'OK',
-          doc,
+          doc: chat.messages[chat.messages.length - 1],
         });
       }
     });
   }
 }
 
-export async function readMessage() {
-  return null;
+/**
+ * Reads all messages in a given chat
+ * @param {object} payload The data received from the client
+ * @param {function} callback The acknowledgement function to send a response to the client
+ */
+export async function readMessage(payload, callback) {
+  const socket = this;
+
+  if (typeof callback !== 'function') {
+    // not an acknowledgement
+    socket.disconnect();
+  }
+
+  const { chatId } = payload;
+
+  Chat.findById(chatId, (err, chat) => {
+    if (err) {
+      // handle error
+      callback({
+        status: 'ERROR',
+        error: err,
+      });
+    } else {
+      // send chat messages to client
+      const messages = chat ? chat.messages : [];
+      messages.reverse();
+      callback({
+        status: 'OK',
+        messages,
+      });
+    }
+  });
 }
 
 export async function updateMessage() {

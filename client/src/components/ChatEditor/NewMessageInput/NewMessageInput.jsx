@@ -3,6 +3,7 @@
  */
 
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -11,12 +12,17 @@ import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 
 import useStyles from './styles';
+import { createMessage } from '../../../actions/messages';
 
 /**
  * Collects new message text input from the user in a ChatEditor component.
  */
 const NewMessageInput = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
+  const activeChat = useSelector((state) => state.chats.active.id);
 
   const [messageText, setMessageText] = useState('');
 
@@ -25,8 +31,7 @@ const NewMessageInput = () => {
    * @param message the message to send
    */
   const sendMessage = (message) => {
-    // eslint-disable-next-line no-alert
-    alert(message);
+    dispatch(createMessage(activeChat, message, user.email));
   };
 
   /**
