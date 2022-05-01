@@ -46,10 +46,15 @@ export async function createMessage(payload, callback) {
         });
       } else {
         // send created message document (most recent) to client
+        const newMessageDoc = chat.messages[chat.messages.length - 1];
         callback({
           status: 'OK',
-          doc: chat.messages[chat.messages.length - 1],
+          doc: newMessageDoc,
         });
+
+        // send created message to all chat participants
+        console.log('Sending message to', chatId);
+        socket.broadcast.emit(`new-message:${chatId}`, newMessageDoc);
       }
     });
   }

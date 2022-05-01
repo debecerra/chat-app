@@ -22,16 +22,16 @@ const NewMessageInput = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
-  const activeChat = useSelector((state) => state.chats.active.id);
+  const activeChat = useSelector((state) => state.chats.active?.id);
 
   const [messageText, setMessageText] = useState('');
 
   /**
-   * Sends a message to the current chat
+   * Sends a message to the active chat
    * @param message the message to send
    */
   const sendMessage = (message) => {
-    dispatch(createMessage(activeChat, message, user.email));
+    if (activeChat) dispatch(createMessage(activeChat, message, user.email));
   };
 
   /**

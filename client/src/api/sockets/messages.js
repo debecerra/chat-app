@@ -17,3 +17,16 @@ export const emitCreateMessage = (payload, callback) => socket.emit('message:cre
  * @param {function} callback The acknowledgement to be called once the request has been completed
  */
 export const emitReadMessages = (payload, callback) => socket.emit('message:read', payload, callback);
+
+/**
+ * Adds a listener for new messages in a chat.
+ * @param {string} chatId The ID of the chat to listen to
+ * @param {function} callback The callback to run when an event is received
+ */
+export const startMessageListener = (chatId, callback) => socket.on(`new-message:${chatId}`, callback);
+
+/**
+ * Removes a listener for new messages in a chat.
+ * @param {string} chatId The ID of the chat to listen to
+ */
+export const stopMessageListener = (chatId) => socket.off(`new-message:${chatId}`);

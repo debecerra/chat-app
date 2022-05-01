@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 import Message from './Message/Message';
 import Input from './NewMessageInput/NewMessageInput';
 import useStyles from './styles';
-import { getMessages } from '../../actions/messages';
+import { getMessages, subscribeToMessages, unsubscribeFromMessages } from '../../actions/messages';
 
 // const messages1 = [
 //   {
@@ -48,13 +48,17 @@ const ChatEditor = ({ isChatListDrawerOpen }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const activeChat = useSelector((state) => state.chats.active.id);
+  const activeChat = useSelector((state) => state.chats.active?.id);
   const messages = useSelector((state) => state.messages.all);
   const user = useSelector((state) => state.auth.user);
 
   // update messages if active chat changes
   useEffect(() => {
-    dispatch(getMessages(activeChat));
+    if (activeChat) dispatch(getMessages(activeChat)); // get all existing messages
+    if (activeChat) dispatch(subscribeToMessages(activeChat));// add listener for new messages
+    return () => {
+      unsubscribeFromMessages(activeChat); // remove listener for new messages
+    };
   }, [activeChat]);
 
   return (

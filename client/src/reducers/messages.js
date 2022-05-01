@@ -1,12 +1,19 @@
 import {
   CREATE_MESSAGE,
   GET_MESSAGES,
+  RECEIVE_MESSAGE,
 } from '../constants/actionTypes';
 
 const messages = (state = { all: [] }, action) => {
   switch (action.type) {
-    // add a new message to the state
+    // add new message to the state
     case CREATE_MESSAGE:
+      return {
+        all: [action.data, ...state.all],
+      };
+
+    // add received message to the state
+    case RECEIVE_MESSAGE:
       return {
         all: [action.data, ...state.all],
       };
