@@ -2,9 +2,10 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import chats from './chats';
+import messages from './messages';
 
 // combine all reducers
-const appReducer = combineReducers({ auth, chats });
+const appReducer = combineReducers({ auth, chats, messages });
 
 // is LOGOUT action, reinitialize all reducers
 const rootReducer = (state, action) => {

@@ -22,6 +22,20 @@ const Input = (props) => {
 
   const classes = useStyles();
 
+  /**
+   * Triggers onAddItem function when Enter key is pressed
+   * @param {Event} e the event that was triggered
+   */
+  const handleKeyDown = (e) => {
+    /* MDN Web Docs, "KeyboardEvent.ctrlKey", 03-29-2021,
+     * https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/ctrlKey, Public Domain
+     */
+    if (e.key === 'Enter') {
+      // Add item if Enter is clicked
+      onAddItem();
+    }
+  };
+
   return (
     <TextField
       className={classes.input}
@@ -31,6 +45,7 @@ const Input = (props) => {
       type={type}
       fullWidth
       onChange={handleChange}
+      onKeyDown={handleKeyDown}
       InputProps={{
         inputProps: {
           autoComplete: 'new-password',
@@ -51,12 +66,12 @@ const Input = (props) => {
 };
 
 Input.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  onAddItem: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired, // the name of the component
+  label: PropTypes.string.isRequired, // the label of the underlying TextField
+  value: PropTypes.string.isRequired, // the value of the underlying TextField
+  type: PropTypes.string.isRequired, // the type of the underlying TextField
+  handleChange: PropTypes.func.isRequired, // function to be triggered when value is changed
+  onAddItem: PropTypes.func.isRequired, // function to be triggered when add button is clicked
 };
 
 export default Input;

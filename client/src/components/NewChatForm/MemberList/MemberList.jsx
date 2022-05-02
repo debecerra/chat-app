@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import Chip from '@material-ui/core/Chip';
 
@@ -13,11 +14,12 @@ const MemberList = ({ userEmails, onEmailDelete }) => {
 
   return (
     <div>
-      {userEmails.map((email) => (
+      {_.range(userEmails.length).map((num) => (
         <Chip
+          key={num}
           className={classes.chip}
-          label={email}
-          onDelete={() => onEmailDelete(email)}
+          label={userEmails[num]}
+          onDelete={() => onEmailDelete(userEmails[num])}
         />
       ))}
     </div>
@@ -25,7 +27,7 @@ const MemberList = ({ userEmails, onEmailDelete }) => {
 };
 
 MemberList.propTypes = {
-  userEmails: PropTypes.arrayOf(PropTypes.string),
+  userEmails: PropTypes.arrayOf(PropTypes.string), // emails of the users
   onEmailDelete: PropTypes.func, // function to be called when an email is deleted
 };
 

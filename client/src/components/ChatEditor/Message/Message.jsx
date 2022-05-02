@@ -15,7 +15,7 @@ import useStyles from './styles';
 /**
  * A single chat message in a ChatEditor component.
  */
-const Message = ({ text, type, user }) => {
+const Message = ({ text, type, author }) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +26,7 @@ const Message = ({ text, type, user }) => {
         disableGutters
         className={clsx(classes.contentOuter, {
           [classes.send]: type === 'send',
-          [classes.receive]: type === 'recieve',
+          [classes.receive]: type === 'receive',
         })}
       >
 
@@ -43,7 +43,7 @@ const Message = ({ text, type, user }) => {
           {/* username */}
           {type === 'receive' && (
             <Typography className={classes.user} variant="subtitle2" align="left">
-              {user}
+              {author}
             </Typography>
           )}
 
@@ -57,8 +57,8 @@ const Message = ({ text, type, user }) => {
 
 Message.propTypes = {
   text: PropTypes.string.isRequired, // the text of the message
-  type: PropTypes.string.isRequired, // 'send' or 'recieve'
-  user: PropTypes.string.isRequired, // the user that send the message
+  type: PropTypes.string.isRequired, // 'send' or 'receive'
+  author: PropTypes.string.isRequired, // the user that send the message
 };
 
 export default Message;

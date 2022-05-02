@@ -24,6 +24,7 @@ const Home = () => {
   const user = useSelector((state) => state.auth.user); // store of current user data
   const loggedIn = useSelector((state) => state.auth.loggedIn); // store of logged in status
   const [currentUser, setCurrentUser] = useState(null); // state of current user
+  const activeChat = useSelector((state) => state.chats.active);
 
   // fetch the user data, if needed, when the page is first rendered
   useEffect(() => {
@@ -52,6 +53,11 @@ const Home = () => {
   useEffect(() => {
     setCurrentUser(user);
   }, [user, dispatch]);
+
+  // log different status indicators for debugging
+  useEffect(() => {
+    console.log('Active Chat =', activeChat);
+  }, []);
 
   /**
    * TEMP: execute a GET request to server /user route

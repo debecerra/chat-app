@@ -18,7 +18,7 @@ import MemberList from './MemberList/MemberList';
 
 import { createChat } from '../../actions/chats';
 
-const NewChatForm = ({ onDiscard }) => {
+const NewChatForm = React.forwardRef(({ onDiscard }, ref) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -39,11 +39,12 @@ const NewChatForm = ({ onDiscard }) => {
   };
 
   /**
-   * Adds an email to the members array.
+   * Adds the email in newMemberField state to the members array.
    */
   const handleAddMember = () => {
-    if (!members.includes(newMemberField)) {
-      setMembers([...members, newMemberField]);
+    const newMemberEmail = newMemberField.trim();
+    if (newMemberEmail.length > 0 && !members.includes(newMemberEmail)) {
+      setMembers([...members, newMemberEmail]);
     }
     setNewMemberField('');
   };
@@ -69,7 +70,7 @@ const NewChatForm = ({ onDiscard }) => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" ref={ref}>
 
       {/* form */}
       <Paper className={classes.paper} elevation={5}>
@@ -96,7 +97,7 @@ const NewChatForm = ({ onDiscard }) => {
       </Paper>
     </Container>
   );
-};
+});
 
 NewChatForm.propTypes = {
   onDiscard: PropTypes.func,

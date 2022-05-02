@@ -11,3 +11,8 @@ export const CREATE_CHAT = 'CREATE CHAT';
 export const GET_CHATS = 'GET CHATS';
 export const UPDATE_CHAT = 'UPDATE CHAT';
 export const LEAVE_CHAT = 'DELETE CHAT';
+export const SELECT_ACTIVE_CHAT = 'SELECT ACTIVE CHAT';
+
+export const CREATE_MESSAGE = 'CREATE MESSAGE';
+export const RECEIVE_MESSAGE = 'RECEIVE MESSAGE';
+export const GET_MESSAGES = 'GET MESSAGES';

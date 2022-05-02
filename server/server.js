@@ -16,6 +16,7 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 
 import registerChatHandlers from './sockets/chats.js';
+import registerMessageHandlers from './sockets/messages.js';
 
 const CORS_OPTIONS = {
   origin: process.env.ORIGIN,
@@ -62,6 +63,7 @@ io.on('connection', (socket) => {
   });
   console.log(connections);
   registerChatHandlers(io, socket);
+  registerMessageHandlers(io, socket);
 
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);

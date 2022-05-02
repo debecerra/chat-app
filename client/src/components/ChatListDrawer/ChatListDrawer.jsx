@@ -20,7 +20,7 @@ import useStyles from './styles';
 const ChatListDrawer = ({ open, openNewChatForm }) => {
   const classes = useStyles();
 
-  const chats = useSelector((state) => state.chats);
+  const chats = useSelector((state) => state.chats.all);
 
   return (
     <Drawer
@@ -41,7 +41,7 @@ const ChatListDrawer = ({ open, openNewChatForm }) => {
         </div>
         <List>
           {chats.map((chat) => (
-            <ChatListItem key={chat.id} name={chat.name} members={chat.members} />
+            <ChatListItem key={chat.id} id={chat.id} name={chat.name} />
           ))}
         </List>
       </div>
