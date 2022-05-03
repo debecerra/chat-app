@@ -6,17 +6,17 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from 'passport';
 
-import passportConfig from './config/passport.js';
-import databaseConfig from './config/database.js';
+import passportConfig from './server/config/passport.js';
+import databaseConfig from './server/config/database.js';
 
-import sessionMiddleware from './middleware/session.js';
+import sessionMiddleware from './server/middleware/session.js';
 
-import indexRoute from './routes/index.js';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
+import indexRoute from './server/routes/index.js';
+import authRoutes from './server/routes/auth.js';
+import userRoutes from './server/routes/users.js';
 
-import registerChatHandlers from './sockets/chats.js';
-import registerMessageHandlers from './sockets/messages.js';
+import registerChatHandlers from './server/sockets/chats.js';
+import registerMessageHandlers from './server/sockets/messages.js';
 
 const CORS_OPTIONS = {
   origin: process.env.ORIGIN,
