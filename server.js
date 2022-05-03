@@ -5,6 +5,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from 'passport';
+import path from 'path';
 
 import passportConfig from './server/config/passport.js';
 import databaseConfig from './server/config/database.js';
@@ -47,9 +48,21 @@ io.use(wrap(passport.session()));
 passportConfig(passport);
 databaseConfig();
 
-app.use(indexRoute);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+
+if (process.env.ENVIRONMENT === 'PROD') {
+  console.log("Starting production server with static React build");
+  const __dirname = path.resolve();
+  console.log(__dirname);
+  app.use(express.static('./client/build'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+} else {
+  console.log("Starting development server");
+  app.use(indexRoute);
+}
 
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
