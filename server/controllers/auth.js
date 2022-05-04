@@ -81,7 +81,7 @@ export const googleLoginSuccess = (req, res) => {
    * https://stackoverflow.com/a/19038048, CC BY-SA 3.0
    */
   const query = querystring.stringify({ googleSuccess: true });
-  res.redirect(`${process.env.ORIGIN}?${query}`);
+  res.redirect(`${process.env.CLIENT_ENDPOINT}?${query}`);
 };
 
 /**

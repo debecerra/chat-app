@@ -20,7 +20,7 @@ import registerChatHandlers from './server/sockets/chats.js';
 import registerMessageHandlers from './server/sockets/messages.js';
 
 const CORS_OPTIONS = {
-  origin: process.env.ORIGIN,
+  origin: process.env.CLIENT_ENDPOINT,
   credentials: true,
 };
 
@@ -51,10 +51,13 @@ databaseConfig();
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 
-if (process.env.ENVIRONMENT === 'PROD') {
+/* Roadside Coder, https://www.youtube.com/channel/UCIPZVAwDGa-A4ZJxCBvXRuQ,
+ * Deploying MERN Stack App to Heroku - MERN Stack Chat App with Socket.IO #17, 
+ * https://www.youtube.com/watch?v=7cfnH1jhj00&t=263s, 2021-12-08
+ */
+if (process.env.NODE_ENV === 'PROD') {
   console.log("Starting production server with static React build");
   const __dirname = path.resolve();
-  console.log(__dirname);
   app.use(express.static('./client/build'));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));

@@ -119,7 +119,7 @@ const RegisterOrLoginForm = () => {
         <Divider className={classes.divider} />
 
         {/* google sign in button */}
-        <Link href={`${process.env.REACT_APP_API_URL}/auth/google`} className={classes.googleButtonParent}>
+        <Link href={`${process.env.REACT_APP_API_ENDPOINT}/auth/google`} className={classes.googleButtonParent}>
           <GoogleButton className={classes.googleButton}>
             Sign in with Google
           </GoogleButton>
