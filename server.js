@@ -55,7 +55,7 @@ app.use('/users', userRoutes);
  * Deploying MERN Stack App to Heroku - MERN Stack Chat App with Socket.IO #17, 
  * https://www.youtube.com/watch?v=7cfnH1jhj00&t=263s, 2021-12-08
  */
-if (process.env.NODE_ENV === 'PROD') {
+if (process.env.NODE_ENV === 'production') {
   console.log("Starting production server with static React build");
   const __dirname = path.resolve();
   app.use(express.static('./client/build'));
