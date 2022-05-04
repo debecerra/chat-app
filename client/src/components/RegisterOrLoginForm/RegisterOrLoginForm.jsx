@@ -78,6 +78,8 @@ const RegisterOrLoginForm = () => {
     setRegisterMode((prevMode) => !prevMode);
   };
 
+  const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://chat-app-debecerra.herokuapp.com/' : 'http://localhost:5000';
+
   return (
     <Container component="main" maxWidth="xs">
 
@@ -119,7 +121,7 @@ const RegisterOrLoginForm = () => {
         <Divider className={classes.divider} />
 
         {/* google sign in button */}
-        <Link href={`${process.env.REACT_APP_API_ENDPOINT}/auth/google`} className={classes.googleButtonParent}>
+        <Link href={`${API_ENDPOINT}/auth/google`} className={classes.googleButtonParent}>
           <GoogleButton className={classes.googleButton}>
             Sign in with Google
           </GoogleButton>
