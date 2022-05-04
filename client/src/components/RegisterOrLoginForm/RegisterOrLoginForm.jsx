@@ -78,7 +78,7 @@ const RegisterOrLoginForm = () => {
     setRegisterMode((prevMode) => !prevMode);
   };
 
-  const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://chat-app-debecerra.herokuapp.com/' : 'http://localhost:5000';
+  const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://chat-app-debecerra.herokuapp.com' : 'http://localhost:5000';
 
   return (
     <Container component="main" maxWidth="xs">
