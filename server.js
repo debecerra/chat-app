@@ -56,6 +56,7 @@ app.use('/users', userRoutes);
  * https://www.youtube.com/watch?v=7cfnH1jhj00&t=263s, 2021-12-08
  */
 if (process.env.NODE_ENV === 'production') {
+  // set up static React build if running in production
   console.log("Starting production server with static React build");
   const __dirname = path.resolve();
   app.use(express.static('./client/build'));
@@ -63,6 +64,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 } else {
+  // run the web application in development environment
   console.log("Starting development server");
   app.use(indexRoute);
 }
