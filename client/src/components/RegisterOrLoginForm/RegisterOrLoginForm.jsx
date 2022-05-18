@@ -79,7 +79,6 @@ const RegisterOrLoginForm = () => {
   };
 
   const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://chat-app-debecerra.azurewebsites.net' : 'http://localhost:5000';
-  console.log('env', process.env);
 
   return (
     <Container component="main" maxWidth="xs">
