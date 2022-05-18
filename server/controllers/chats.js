@@ -1,3 +1,7 @@
+/**
+ * Defines handler functions for chat socket events.
+ */
+
 import Joi from 'joi';
 
 import Chat from '../models/chat.js';
@@ -11,17 +15,21 @@ const chatSchema = Joi.object({
 });
 
 /**
- * Creates a chat object given a client payload
- * @param payload data received from the client
- * @param callback acknowledgment function to send a response to the client
+ * Create a chat object given a client payload.
+ *
+ * @param {object} payload The data received from the client
+ * @param {function} callback The acknowledgment function used to send response to the client
  */
 export async function createChat(payload, callback) {
   const socket = this;
-  const { user } = socket.request;
+  const user = socket?.request?.user;
 
-  if (typeof callback !== 'function') {
-    // not an acknowledgement
-    socket.disconnect();
+  // exit if callback if not a function
+  if (typeof callback !== 'function') return;
+
+  if (!user) {
+    callback({ status: 'ERROR', error: 'Client is not authenticated' });
+    return;
   }
 
   const { error, value } = chatSchema.validate(payload);
@@ -66,28 +74,41 @@ export async function createChat(payload, callback) {
 }
 
 /**
- * Gets the list of chat objects and sends to client via an acknowledgement.
- * @param callback acknowledgment function to send a response to the client
+ * Get the list of chats available to client.
+ *
+ * @param {function} callback The acknowledgment function used to send response to the client
  */
 export async function readChat(callback) {
   const socket = this;
+  const user = socket?.request?.user;
 
-  if (socket?.request?.user === null) {
-    callback({ status: 'ERROR', error: 'Client is not authenticated' });
+  // exit if callback if not a function
+  if (typeof callback !== 'function') return;
+
+  if (!user) {
+    callback({
+      status: 'ERROR',
+      error: 'Client is not authenticated',
+    });
     return;
   }
 
-  // find all chats for the requesting user
+  // find all chats available to the user
   const { email } = socket.request.user;
   Chat.find({ 'members.email': email }, (err, chats) => {
-    callback({ status: 'OK', chats });
+    callback({
+      status: 'OK',
+      chats,
+    });
   });
 }
 
-export const updateChat = () => {
-  // const socket = this;
-};
+// TODO
+export async function updateChat() {
+  return null;
+}
 
-export const deleteChat = () => {
-  // const socket = this;
-};
+// TODO
+export async function deleteChat() {
+  return null;
+}

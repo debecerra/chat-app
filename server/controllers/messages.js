@@ -1,3 +1,7 @@
+/**
+ * Defines handler functions for message socket events.
+ */
+
 import Joi from 'joi';
 
 import Chat from '../models/chat.js';
@@ -12,17 +16,16 @@ const messageSchema = Joi.object({
 });
 
 /**
- * Creates a message given a client payload
- * @param payload The data received from the client
- * @param callback The acknowledgment function to send a response to the client
+ * Creates a message given a client payload.
+ *
+ * @param {object} payload The data received from the client
+ * @param {function} callback The acknowledgment function used to send response to the client
  */
 export async function createMessage(payload, callback) {
   const socket = this;
 
-  if (typeof callback !== 'function') {
-    // not an acknowledgement
-    socket.disconnect();
-  }
+  // exit if callback if not a function
+  if (typeof callback !== 'function') return;
 
   const { error, value } = messageSchema.validate(payload);
 
@@ -61,16 +64,21 @@ export async function createMessage(payload, callback) {
 }
 
 /**
- * Reads all messages in a given chat
+ * Reads all messages in a given chat.
+ *
  * @param {object} payload The data received from the client
- * @param {function} callback The acknowledgement function to send a response to the client
+ * @param {function} callback The acknowledgment function used to send response to the client
  */
 export async function readMessage(payload, callback) {
   const socket = this;
+  const user = socket?.request?.user;
 
-  if (typeof callback !== 'function') {
-    // not an acknowledgement
-    socket.disconnect();
+  // exit if callback if not a function
+  if (typeof callback !== 'function') return;
+
+  if (!user) {
+    callback({ status: 'ERROR', error: 'Client is not authenticated' });
+    return;
   }
 
   const { chatId } = payload;
@@ -94,10 +102,12 @@ export async function readMessage(payload, callback) {
   });
 }
 
+// TODO
 export async function updateMessage() {
   return null;
 }
 
+// TODO
 export async function deleteMessage() {
   return null;
 }
