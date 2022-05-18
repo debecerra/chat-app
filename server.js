@@ -5,21 +5,22 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from 'passport';
+import path from 'path';
 
-import passportConfig from './config/passport.js';
-import databaseConfig from './config/database.js';
+import passportConfig from './server/config/passport.js';
+import databaseConfig from './server/config/database.js';
 
-import sessionMiddleware from './middleware/session.js';
+import sessionMiddleware from './server/middleware/session.js';
 
-import indexRoute from './routes/index.js';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
+import indexRoute from './server/routes/index.js';
+import authRoutes from './server/routes/auth.js';
+import userRoutes from './server/routes/users.js';
 
-import registerChatHandlers from './sockets/chats.js';
-import registerMessageHandlers from './sockets/messages.js';
+import registerChatHandlers from './server/sockets/chats.js';
+import registerMessageHandlers from './server/sockets/messages.js';
 
 const CORS_OPTIONS = {
-  origin: process.env.ORIGIN,
+  origin: process.env.CLIENT_ENDPOINT,
   credentials: true,
 };
 
@@ -47,9 +48,26 @@ io.use(wrap(passport.session()));
 passportConfig(passport);
 databaseConfig();
 
-app.use(indexRoute);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+
+/* Roadside Coder, https://www.youtube.com/channel/UCIPZVAwDGa-A4ZJxCBvXRuQ,
+ * Deploying MERN Stack App to Heroku - MERN Stack Chat App with Socket.IO #17, 
+ * https://www.youtube.com/watch?v=7cfnH1jhj00&t=263s, 2021-12-08
+ */
+if (process.env.NODE_ENV === 'production') {
+  // set up static React build if running in production
+  console.log("Starting production server with static React build");
+  const __dirname = path.resolve();
+  app.use(express.static('./client/build'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+} else {
+  // run the web application in development environment
+  console.log("Starting development server");
+  app.use(indexRoute);
+}
 
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);

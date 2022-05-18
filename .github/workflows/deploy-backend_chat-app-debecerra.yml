@@ -19,19 +19,27 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
-          node-version: '16.x'
+          node-version: '14.x'
 
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
+        
+      - name: Build client application
+        run: |
+          npm install --prefix client
+          npm run build --prefix client
+
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,10 +49,18 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Delete existing zip files
+        run: rm -f release.zip
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: node-app
+    
+      - name: Unzip artifact for deployment 
+        run: |
+          unzip release.zip
+          rm release.zip
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -52,5 +68,5 @@ jobs:
         with:
           app-name: 'chat-app-debecerra'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_64BA17F485DF4EBFB3CA25506C7DCE98 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F806C90788A14EFAB1ADA426C50C611C }}
           package: .

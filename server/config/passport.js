@@ -45,7 +45,7 @@ export default (passport) => {
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.ADDRESS}:${process.env.PORT}/auth/google/redirect`,
+      callbackURL: `${process.env.API_ENDPOINT}/auth/google/redirect`,
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     },
     (accessToken, refreshToken, profile, done) => {

@@ -21,5 +21,5 @@ export const ensureAuthenticated = (req, res, next) => {
  * Google redirects back to server API.
  */
 export const ensureGoogleAuth = passport.authenticate('google', {
-  failureRedirect: `${process.env.ORIGIN}/login?loginFailed=true`,
+  failureRedirect: `${process.env.CLIENT_ENDPOINT}/login?loginFailed=true`,
 });
