@@ -102,13 +102,3 @@ export async function readChat(callback) {
     });
   });
 }
-
-// TODO
-export async function updateChat() {
-  return null;
-}
-
-// TODO
-export async function deleteChat() {
-  return null;
-}

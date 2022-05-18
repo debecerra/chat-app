@@ -101,13 +101,3 @@ export async function readMessage(payload, callback) {
     }
   });
 }
-
-// TODO
-export async function updateMessage() {
-  return null;
-}
-
-// TODO
-export async function deleteMessage() {
-  return null;
-}
