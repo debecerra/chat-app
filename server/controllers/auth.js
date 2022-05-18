@@ -1,3 +1,7 @@
+/**
+ * Defines handler functions for authentication router.
+ */
+
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import querystring from 'querystring';
@@ -9,19 +13,18 @@ dotenv.config();
 
 /**
  * Register a new user and initiate client session using local strategy.
- * @param req the http request
- * @param res the http response
+ * @param req The HTTP request
+ * @param res The HTTP response
  */
 export const register = async (req, res) => {
   User.findOne({ email: req.body.email }, async (err, docFound) => {
-    if (err) {
-      // handle any errors
-      throw err;
-    } else if (docFound) {
-      // send error code if user already exists
-      res.status(400).json({ message: 'User already exists' });
+    if (err) throw err;
+
+    if (docFound) {
+      // if user already exists, send 409 CONFLICT
+      res.status(409).json({ message: 'User already exists' });
     } else if (!docFound) {
-      // create a new user
+      // if user does not yet exist, create a new user
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       const newUser = new User({
         displayName: req.body.displayName,
@@ -32,7 +35,7 @@ export const register = async (req, res) => {
 
       // login the newly created user
       req.login(newUser, () => {
-        res.status(200).json({ message: 'Successfully Authenticated' });
+        res.status(200).json({ message: 'Successfully authenticated' });
       });
     }
   });
@@ -40,9 +43,9 @@ export const register = async (req, res) => {
 
 /**
  * Login the client using local authentication and initiate a session.
- * @param req the http request
- * @param res the http response
- * @param next the next middleware function to be executed
+ * @param req The HTTP request
+ * @param res The HTTP response
+ * @param next The next middleware function to be called
  */
 export const login = async (req, res, next) => {
   passport.authenticate('local', (err, user) => {
@@ -52,11 +55,11 @@ export const login = async (req, res, next) => {
     if (!user) {
       res.status(404).json({ message: 'User does not exist' });
     } else {
-      // if success, login the user
+      // if authentication successful, login the user
       req.login(user, (error) => {
         if (error) throw error;
-        console.log('Successfully authenticated:\n', user);
-        res.status(200).json({ message: 'Successfully Authenicated' });
+        console.log(`${user.email} authenticated successfully`);
+        res.status(200).json({ message: 'Successfully authenticated' });
       });
     }
   })(req, res, next);
@@ -64,16 +67,15 @@ export const login = async (req, res, next) => {
 
 /**
  * Login the client using Google authentication and initiate a session.
- * @param req the http request
- * @param res the http response
+ * @param req The HTTP request
+ * @param res the HTTP response
  */
-// eslint-disable-next-line no-unused-vars
 export const googleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });
 
 /**
  * Redirect to the client application on successful Google Sign In.
- * @param req the http request
- * @param res the http response
+ * @param req The HTTP request
+ * @param res The HTTP response
  */
 export const googleLoginSuccess = (req, res) => {
   /* Fareed Alnamrouti, https://stackoverflow.com/users/427622/fareed-alnamrouti,

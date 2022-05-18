@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 
+/** Schema for a user of the web app */
 const userSchema = mongoose.Schema({
   displayName: { type: String, required: true },
   email: { type: String, required: true },

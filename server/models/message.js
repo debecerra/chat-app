@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 
+/** Schema for a chat message */
 const messageSchema = mongoose.Schema({
   body: { type: String, required: true },
   author: { type: String, required: true },

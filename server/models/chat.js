@@ -3,6 +3,7 @@
 import mongoose from 'mongoose';
 import messageModel from './message.js';
 
+/** Schema for a chat */
 const chatSchema = mongoose.Schema({
   name: { type: String, required: true },
   creator: { type: String, required: true },

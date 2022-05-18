@@ -1,3 +1,7 @@
+/**
+ * Defines Router for user routes.
+ */
+
 import express from 'express';
 
 import { getUser } from '../controllers/users.js';

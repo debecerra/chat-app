@@ -1,4 +1,9 @@
 /* eslint-disable consistent-return */
+
+/**
+ * Defines Passport strategies for authentication.
+ */
+
 import bcrypt from 'bcryptjs';
 import passportLocal from 'passport-local';
 import passportGoogle from 'passport-google-oauth20';
