@@ -1,3 +1,7 @@
+/**
+ * Defines session middleware.
+ */
+
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 

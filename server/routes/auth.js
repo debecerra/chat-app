@@ -1,3 +1,7 @@
+/**
+ * Defines Router for authentication routes.
+ */
+
 import express from 'express';
 
 import { ensureGoogleAuth } from '../middleware/auth.js';
@@ -16,7 +20,7 @@ router.post('/login', login);
 // Route that handles google sign in request
 router.get('/google', googleLogin);
 
-// Google Sign in redirects to this route on completion
+// Route that handles Google Sign redirect on completion
 router.get('/google/redirect', ensureGoogleAuth, googleLoginSuccess);
 
 // Route that handles logout request

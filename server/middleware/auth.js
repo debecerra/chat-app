@@ -1,3 +1,7 @@
+/**
+ * Defines authentication middleware for HTTP requests.
+ */
+
 import passport from 'passport';
 import dotenv from 'dotenv';
 

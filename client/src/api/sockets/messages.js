@@ -16,6 +16,7 @@ export const emitCreateMessage = (payload, callback) => socket.emit('message:cre
  * @param {object} payload The data to send to the server
  * @param {function} callback The acknowledgement to be called once the request has been completed
  */
+// eslint-disable-next-line no-unused-vars
 export const emitReadMessages = (payload, callback) => socket.emit('message:read', payload, callback);
 
 /**
