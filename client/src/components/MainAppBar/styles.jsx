@@ -11,6 +11,9 @@ export default makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  displayName: {
+    margin: theme.spacing(2),
+  },
   title: {
     flexGrow: 1,
   },
