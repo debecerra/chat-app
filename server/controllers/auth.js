@@ -35,7 +35,16 @@ export const register = async (req, res) => {
 
       // login the newly created user
       req.login(newUser, () => {
-        res.status(200).json({ message: 'Successfully authenticated' });
+        // only return the display name and email
+        const userInfo = {
+          displayName: newUser.displayName,
+          email: newUser.email,
+        };
+        res.status(200).json({
+          status: 'OK',
+          message: 'Successfully authenticated',
+          user: userInfo,
+        });
       });
     }
   });
@@ -59,7 +68,16 @@ export const login = async (req, res, next) => {
       req.login(user, (error) => {
         if (error) throw error;
         console.log(`${user.email} authenticated successfully`);
-        res.status(200).json({ message: 'Successfully authenticated' });
+        // only return the display name and email
+        const userInfo = {
+          displayName: user.displayName,
+          email: user.email,
+        };
+        res.status(200).json({
+          status: 'OK',
+          message: 'Successfully authenticated',
+          user: userInfo,
+        });
       });
     }
   })(req, res, next);

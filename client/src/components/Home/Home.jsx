@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 /**
  * Contains the Home component which acts as the main landing page for the web app.
  */
 
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -78,23 +79,24 @@ const Home = () => {
   };
 
   return (
-    <Box>
-      <Typography>
-        {currentUser === null ? 'Sign in to get started' : `Welcome ${currentUser.displayName}`}
-      </Typography>
-      <Button onClick={handleClickGetUser}>
-        Get User
-      </Button>
-      <Button href="/login">
-        Login
-      </Button>
-      <Button href="/dashboard">
-        Dashboard
-      </Button>
-      <Button onClick={handleClickLogout}>
-        Logout
-      </Button>
-    </Box>
+    // <Box>
+    //   <Typography>
+    //     {currentUser === null ? 'Sign in to get started' : `Welcome ${currentUser.displayName}`}
+    //   </Typography>
+    //   <Button onClick={handleClickGetUser}>
+    //     Get User
+    //   </Button>
+    //   <Button href="/login">
+    //     Login
+    //   </Button>
+    //   <Button href="/dashboard">
+    //     Dashboard
+    //   </Button>
+    //   <Button onClick={handleClickLogout}>
+    //     Logout
+    //   </Button>
+    // </Box>
+    <Redirect to={{ pathname: '/dashboard' }} />
   );
 };
 

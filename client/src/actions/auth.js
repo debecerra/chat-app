@@ -1,5 +1,6 @@
 import { AUTHENTICATE, LOGOUT, FETCH_USER_DATA } from '../constants/actionTypes';
 import * as api from '../api/rest';
+import socket from '../services/socket';
 
 /**
  * Returns an action that makes the request to register a new user.
@@ -9,8 +10,14 @@ import * as api from '../api/rest';
  */
 export const register = (formData, router) => async (dispatch) => {
   try {
-    await api.register(formData);
-    dispatch({ type: AUTHENTICATE });
+    const { data } = await api.register(formData);
+
+    // reconnect socket to update authentication
+    socket.disconnect();
+    socket.connect();
+
+    // update redux store
+    dispatch({ type: AUTHENTICATE, data });
     router.push('/');
   } catch (error) {
     console.log(error);
@@ -25,8 +32,14 @@ export const register = (formData, router) => async (dispatch) => {
  */
 export const login = (formData, router) => async (dispatch) => {
   try {
-    await api.login(formData);
-    dispatch({ type: AUTHENTICATE });
+    const response = await api.login(formData);
+
+    // reconnect socket to update authentication
+    socket.disconnect();
+    socket.connect();
+
+    // update redux store
+    dispatch({ type: AUTHENTICATE, data: response.data });
     router.push('/');
   } catch (error) {
     console.log(error);
@@ -53,6 +66,12 @@ export const fetchCurrentUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await api.logout();
+
+    // reconnect socket to update authentication
+    socket.disconnect();
+    socket.connect();
+
+    // update redux store
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.log(error);

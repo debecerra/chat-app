@@ -15,7 +15,7 @@ import ChatListItem from './ChatListItem/ChatListItem';
 import useStyles from './styles';
 
 /**
- * A collapsable drawer that allows users to select from their different chats.
+ * A collapsible drawer that allows users to select from their different chats.
  */
 const ChatListDrawer = ({ open, openNewChatForm }) => {
   const classes = useStyles();
