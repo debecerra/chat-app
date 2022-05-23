@@ -4,7 +4,6 @@
 
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
-import querystring from 'querystring';
 import dotenv from 'dotenv';
 
 import User from '../models/user.js';
@@ -100,8 +99,8 @@ export const googleLoginSuccess = (req, res) => {
    * Edited answer to "How do I redirect in expressjs while passing some context?", 23-05-2017,
    * https://stackoverflow.com/a/19038048, CC BY-SA 3.0
    */
-  const query = querystring.stringify({ googleSuccess: true });
-  res.redirect(`${process.env.CLIENT_ENDPOINT}?${query}`);
+  const query = new URLSearchParams({ googleSuccess: true }).toString();
+  res.redirect(`${process.env.CLIENT_ENDPOINT}/login?${query}`);
 };
 
 /**

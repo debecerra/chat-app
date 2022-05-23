@@ -3,12 +3,13 @@ import * as api from '../api/rest';
 import socket from '../services/socket';
 
 /**
- * Returns an action that makes the request to register a new user.
+ * Thunk action creator that returns thunk function that makes an API request to register
+ * a new user.
+ *
  * @param {object} formData the fields of the register form
- * @param {History} router history instance used to navigate the application
- * @returns the action function
+ * @returns The thunk function/action
  */
-export const register = (formData, router) => async (dispatch) => {
+export const register = (formData) => async (dispatch) => {
   try {
     const { data } = await api.register(formData);
 
@@ -18,19 +19,20 @@ export const register = (formData, router) => async (dispatch) => {
 
     // update redux store
     dispatch({ type: AUTHENTICATE, data });
-    router.push('/');
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
 /**
- * Returns an action that makes a request to login a user
+ * Thunk action creator that returns thunk function that makes an API request to login a user.
+ *
  * @param {object} formData the fields of the login form
  * @param {History} router history instance used to navigate the application
- * @returns the action function
+ * @returns The thunk function/action
  */
-export const login = (formData, router) => async (dispatch) => {
+export const login = (formData) => async (dispatch) => {
   try {
     const response = await api.login(formData);
 
@@ -40,15 +42,17 @@ export const login = (formData, router) => async (dispatch) => {
 
     // update redux store
     dispatch({ type: AUTHENTICATE, data: response.data });
-    router.push('/');
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
 /**
- * Returns an action that makes a request for profile data of user that is authenticated.
- * @returns the action function
+ * Thunk action creator that returns thunk function that requests profile data of user that is
+ * currently authenticated.
+ *
+ * @returns The thunk function/action
  */
 export const fetchCurrentUser = () => async (dispatch) => {
   try {
@@ -60,8 +64,9 @@ export const fetchCurrentUser = () => async (dispatch) => {
 };
 
 /**
- * Returns the action that makes the request to logout a user
- * @returns the action function
+ * Thunk action creator that returns thunk function that makes an API request to logout a user.
+ *
+ * @returns The thunk function/action
  */
 export const logout = () => async (dispatch) => {
   try {
