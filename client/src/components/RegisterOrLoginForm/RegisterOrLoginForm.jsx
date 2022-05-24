@@ -3,9 +3,9 @@
  * or sign in using an existing account.
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
@@ -15,7 +15,7 @@ import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import GoogleButton from 'react-google-button';
 
-import { register, login } from '../../actions/auth';
+import { register, login, fetchCurrentUser } from '../../actions/auth';
 import FormInput from './FormInput';
 import useStyles from './styles';
 
@@ -32,6 +32,7 @@ const initialForm = {
 const RegisterOrLoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const classes = useStyles();
 
   // the fields of the register or login form
@@ -42,6 +43,27 @@ const RegisterOrLoginForm = () => {
 
   // boolean flag that indicates if form is being used to register (true) or login (false)
   const [registerMode, setRegisterMode] = useState(false);
+
+  // if authenticated with Third-Party, fetch user data and update auth store
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('googleSuccess')) {
+      // update the URL so that URL query does not trigger unexpected data fetch
+      /* Ajeet Shah, https://stackoverflow.com/users/2873538/ajeet-shah
+       * "How to remove query param with react hooks?", 26-05-2020
+       * https://stackoverflow.com/a/62032451, CC BY-SA 4.0
+       */
+      queryParams.delete('googleSuccess');
+      history.replace({
+        search: queryParams.toString(),
+      });
+
+      dispatch(fetchCurrentUser())
+        .then(() => {
+          history.push('/');
+        });
+    }
+  }, []);
 
   /**
    * Updates the fields of the form when a change occurs.
@@ -60,15 +82,27 @@ const RegisterOrLoginForm = () => {
 
   /**
    * Submits the contents of the form to either login or register depending on the mode.
+   * If authentication is successful, redirect the user to the home page.
+   * Otherwise, alert that authentication failed.
    * @param e the event that was detected
    */
   const handleSubmit = (e) => {
     e.preventDefault();
+    let action;
     if (registerMode) {
-      dispatch(register(form, history));
+      action = dispatch(register(form));
     } else {
-      dispatch(login(form, history));
+      action = dispatch(login(form));
     }
+
+    action
+      .then(() => {
+        history.push('/');
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-alert
+        alert(`Authentication Failed: ${error.message}`);
+      });
   };
 
   /**
@@ -90,13 +124,13 @@ const RegisterOrLoginForm = () => {
 
         <form className={classes.form} onSubmit={handleSubmit}>
 
+          {/* email */}
+          <FormInput name="email" label="Email" value={form.email} type="email" autoFocus handleChange={handleChange} />
+
           {/* full name */}
           {registerMode ? (
             <FormInput name="displayName" label="Display Name" handleChange={handleChange} value={form.displayName} type="text" />
           ) : null}
-
-          {/* email */}
-          <FormInput name="email" label="Email" value={form.email} type="email" autoFocus handleChange={handleChange} />
 
           {/* password */}
           <FormInput name="password" label="Password" value={form.password} type={showPassword ? 'text' : 'password'} isPassword handleChange={handleChange} handleClickShowPassword={handleClickShowPassword} />

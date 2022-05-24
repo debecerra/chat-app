@@ -5,6 +5,7 @@ const auth = (state = { user: null, loggedIn: false }, action) => {
     case AUTHENTICATE:
       return {
         ...state,
+        user: action.data.user,
         loggedIn: true,
       };
     case LOGOUT:

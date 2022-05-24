@@ -14,33 +14,6 @@ import Input from './NewMessageInput/NewMessageInput';
 import useStyles from './styles';
 import { getMessages, subscribeToMessages, unsubscribeFromMessages } from '../../actions/messages';
 
-// const messages1 = [
-//   {
-//     id: 1,
-//     text: 'Maybe if you nestly expect higher vocabulary from you, this is quite embaressing!',
-//     type: 'send',
-//     user: 'Alberto Guerra',
-//   },
-//   {
-//     id: 2,
-//     text: 'Maybe if you could gher vocabulary from you, this is quite embaressing!',
-//     type: 'send',
-//     user: 'Alberto Guerra',
-//   },
-//   {
-//     id: 3,
-//     text: 'Maybe if you coct higher vocabulary from you, this is quite embaressing!',
-//     type: 'send',
-//     user: 'Alberto Guerra',
-//   },
-//   {
-//     id: 14,
-//     text: 'tly expect higher vocabulary from you, this is quite embaressing!',
-//     type: 'send',
-//     user: 'Alberto Guerra',
-//   },
-// ];
-
 /**
  * Displays messages of a chat and allows the user to send messages to the chat.
  */

@@ -1,3 +1,7 @@
+/**
+ * Contains functions for interacting with chats API.
+ */
+
 import socket from '../../services/socket';
 
 /**

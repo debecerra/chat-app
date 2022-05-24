@@ -4,7 +4,6 @@
 
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
-import querystring from 'querystring';
 import dotenv from 'dotenv';
 
 import User from '../models/user.js';
@@ -35,7 +34,16 @@ export const register = async (req, res) => {
 
       // login the newly created user
       req.login(newUser, () => {
-        res.status(200).json({ message: 'Successfully authenticated' });
+        // only return the display name and email
+        const userInfo = {
+          displayName: newUser.displayName,
+          email: newUser.email,
+        };
+        res.status(200).json({
+          status: 'OK',
+          message: 'Successfully authenticated',
+          user: userInfo,
+        });
       });
     }
   });
@@ -59,7 +67,16 @@ export const login = async (req, res, next) => {
       req.login(user, (error) => {
         if (error) throw error;
         console.log(`${user.email} authenticated successfully`);
-        res.status(200).json({ message: 'Successfully authenticated' });
+        // only return the display name and email
+        const userInfo = {
+          displayName: user.displayName,
+          email: user.email,
+        };
+        res.status(200).json({
+          status: 'OK',
+          message: 'Successfully authenticated',
+          user: userInfo,
+        });
       });
     }
   })(req, res, next);
@@ -82,8 +99,8 @@ export const googleLoginSuccess = (req, res) => {
    * Edited answer to "How do I redirect in expressjs while passing some context?", 23-05-2017,
    * https://stackoverflow.com/a/19038048, CC BY-SA 3.0
    */
-  const query = querystring.stringify({ googleSuccess: true });
-  res.redirect(`${process.env.CLIENT_ENDPOINT}?${query}`);
+  const query = new URLSearchParams({ googleSuccess: true }).toString();
+  res.redirect(`${process.env.CLIENT_ENDPOINT}/login?${query}`);
 };
 
 /**
